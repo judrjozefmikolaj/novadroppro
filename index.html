@@ -109,7 +109,7 @@
         <div id="ai-feedback" class="mt-3 text-[11px] text-cyan-300 font-bold hidden bg-cyan-500/10 p-2.5 rounded-lg border border-cyan-500/20"></div>
     </div>
 
-    <!-- DONATE MODAL -->
+    <!-- DONATE MODAL (Vylepšený pre vlastnú sumu) -->
     <div id="donate-modal" class="fixed inset-0 z-[80] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
         <div class="glass-panel w-full max-w-md p-8 rounded-[2rem] relative border-cyan-500/50 shadow-[0_0_150px_rgba(6,182,212,0.25)] text-center">
             <button onclick="closeDonateModal()" class="absolute top-5 right-6 text-slate-500 hover:text-white transition text-2xl font-light z-50">✕</button>
@@ -126,6 +126,7 @@
                 <button onclick="selectDonation(20, this)" class="donate-btn bg-black/50 border border-white/10 hover:border-cyan-400 rounded-xl py-3 px-5 text-white font-bold transition">20 €</button>
             </div>
             
+            <!-- Vlastná suma -->
             <div class="mb-6 px-4">
                 <input type="number" id="custom-donation" min="1" placeholder="Alebo zadajte vlastnú sumu (€)" oninput="clearDonationButtons()" class="w-full bg-black/50 border border-white/10 hover:border-cyan-400 focus:border-cyan-400 rounded-xl py-3 px-4 text-white text-center font-bold outline-none transition placeholder-slate-500 shadow-inner" data-i18n-placeholder="donate_custom">
             </div>
@@ -137,23 +138,27 @@
         </div>
     </div>
 
-    <!-- KINO MÓD (CAROUSEL LIVE PREVIEW) -->
+    <!-- KINO MÓD (CAROUSEL LIVE PREVIEW) S LEPŠOU VIDITEĽNOSŤOU -->
     <div id="preview-modal" class="fixed inset-0 z-[70] bg-black/95 backdrop-blur-2xl hidden items-center justify-center p-4 selection:bg-transparent">
         <button onclick="closePreview()" class="absolute top-6 right-6 md:top-10 md:right-10 text-slate-400 hover:text-white transition text-4xl font-light z-50">✕</button>
         
         <div class="relative w-full h-full flex flex-col items-center justify-center pt-8">
             <div class="relative w-full h-[65vh] flex items-center justify-center">
+                <!-- Ľavá šípka -->
                 <button onclick="prevImage(event)" class="absolute left-2 sm:left-10 z-50 text-white/40 hover:text-cyan-400 hover:scale-110 transition-all text-6xl md:text-8xl focus:outline-none select-none drop-shadow-lg">&lsaquo;</button>
                 
+                <!-- Ľavý rozostrený náhľad (Viac viditeľný) -->
                 <img id="prev-img" class="absolute left-0 lg:left-[4%] max-h-[45vh] w-[20%] object-contain opacity-50 blur-[2px] scale-90 transition-all duration-300 cursor-pointer hover:opacity-100 hover:blur-none hover:scale-95 hidden z-10" onclick="prevImage(event)">
                 
-                <!-- STREDOVÝ OBRÁZOK (Bez maskujúcich CSS oblúkov, zobrazuje reálnu hranatosť/zaoblenie) -->
+                <!-- HLAVNÝ STREDOVÝ OBRÁZOK -->
                 <div class="relative z-30 flex items-center justify-center w-full max-w-[55vw] h-full">
-                    <img id="main-img" class="max-h-full max-w-full object-contain shadow-[0_0_80px_rgba(6,182,212,0.35)] transition-transform duration-300">
+                    <img id="main-img" class="max-h-full max-w-full object-contain shadow-[0_0_80px_rgba(6,182,212,0.35)] transition-transform duration-300 rounded-xl">
                 </div>
                 
+                <!-- Pravý rozostrený náhľad (Viac viditeľný) -->
                 <img id="next-img" class="absolute right-0 lg:right-[4%] max-h-[45vh] w-[20%] object-contain opacity-50 blur-[2px] scale-90 transition-all duration-300 cursor-pointer hover:opacity-100 hover:blur-none hover:scale-95 hidden z-10" onclick="nextImage(event)">
                 
+                <!-- Pravá šípka -->
                 <button onclick="nextImage(event)" class="absolute right-2 sm:right-10 z-50 text-white/40 hover:text-cyan-400 hover:scale-110 transition-all text-6xl md:text-8xl focus:outline-none select-none drop-shadow-lg">&rsaquo;</button>
             </div>
             
@@ -196,6 +201,7 @@
     <!-- HLAVIČKA -->
     <header class="fixed top-0 left-0 right-0 z-40 glass-panel border-x-0 border-t-0 rounded-none h-24 flex items-center">
         <div class="max-w-[90rem] mx-auto px-6 w-full flex items-center justify-between">
+            <!-- LOGO OTVÁRA DARCOVSKÉ OKNO -->
             <div class="flex items-center space-x-4 cursor-pointer group" onclick="openDonateModal()">
                 <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#020617] via-slate-900 to-cyan-900 flex items-center justify-center text-cyan-400 relative overflow-hidden animate-titan border border-cyan-400/80 shadow-[0_0_15px_rgba(6,182,212,0.4)]">
                     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
@@ -212,6 +218,7 @@
                     <span class="text-slate-400 font-bold mr-2" data-i18n="free_limit">Zadarmo:</span>
                     <span id="limit-counter" class="text-cyan-400 font-black tracking-widest text-sm">300 / 300</span>
                 </div>
+                <!-- Jazyky -->
                 <div class="flex bg-black/50 rounded-xl p-1.5 border border-white/10 shadow-inner">
                     <button onclick="setLanguage('sk', this)" class="lang-btn text-[10px] font-black px-3 py-2 rounded-lg transition text-cyan-400 hover:bg-white/10">SK</button>
                     <button onclick="setLanguage('en', this)" class="lang-btn text-[10px] font-black px-3 py-2 rounded-lg transition text-slate-400 hover:bg-white/10">EN</button>
@@ -294,7 +301,6 @@
                         </label>
                         <div id="wm-logo-preview-box" class="hidden items-center justify-between p-2 bg-black/40 rounded-xl border border-white/5 shadow-inner">
                             <div class="flex items-center overflow-hidden">
-                                <!-- Zobrazenie ostrých hrán loga, bez falošného zaoblenia -->
                                 <img id="wm-logo-preview-img" src="" class="max-h-6 object-contain shrink-0">
                                 <span id="wm-logo-filename" class="text-[10px] text-cyan-400 font-black ml-2 truncate max-w-[80px]"></span>
                             </div>
@@ -399,7 +405,6 @@
 
     <!-- CORE APLIKAČNÝ SKRIPT -->
     <script>
-        // Inicializácia pripravená hneď po načítaní HTML
         document.addEventListener('DOMContentLoaded', () => {
 
             const dict = {
@@ -455,7 +460,7 @@
                     wm_size: "Tamaño", wm_opacity: "Opacidad",
                     round_title: "Esquinas Redondeadas", round_desc: "Corta los bordes en curvas modernas.",
                     exif_desc: "Elimina los metadatos y GPS.", magic_desc: "Revive los colores y mejora las sombras.",
-                    drop_title: "Suelta los archivos aquí", drop_desc: "Procesa hasta 300 fotos a la vez",
+                    drop_title: "Suelta los archivos aquí", drop_desc: "Procesa hasta 300 photos a la vez",
                     results_title: "Archivos procesados", click_preview: "👉 Haz clic para vista previa", btn_download: "Descargar", btn_download_single: "⬇ Descargar foto", btn_dl_all: "⬇ Descargar todos", free_limit: "Gratis:", btn_pro: "Pro",
                     donate_title: "Apoya el proyecto", donate_text1: "Si esta herramienta te ahorró tiempo, considera apoyar nuestro desarrollo.", donate_text2: "Donamos el 50% a la caridad.", donate_btn: "Donar y Ayudar", donate_custom: "O ingresa un monto personalizado (€)"
                 }
@@ -482,7 +487,6 @@
                 }
             };
 
-            // Globálne premenné a funkcie
             window.selectedDonation = 5;
             window.openDonateModal = function() { document.getElementById('donate-modal').classList.add('modal-active'); };
             window.closeDonateModal = function() { document.getElementById('donate-modal').classList.remove('modal-active'); };
@@ -535,7 +539,6 @@
                 }
             };
 
-            // Bezpečné načítanie loga
             const logoInput = document.getElementById('wm-logo-file');
             if(logoInput) {
                 logoInput.addEventListener('change', (e) => {
@@ -738,116 +741,94 @@
                     reader.onload = (e) => {
                         const img = new Image();
                         img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = img.width; canvas.height = img.height;
-                        const ctx = canvas.getContext('2d');
-                        
-                        // 1. Ak je formát JPEG, musíme vytvoriť fixné biele pozadie (nemá priehľadnosť)
-                        if (format === 'jpeg') {
-                            ctx.fillStyle = '#ffffff';
-                            ctx.fillRect(0, 0, canvas.width, canvas.height);
-                        } else {
-                             // Pre PNG/WebP chceme vymazať všetko, aby sme mali čistú priehľadnosť
-                            ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        }
-                        
-                        // 2. Kreslenie hlavnej fotografie (s voliteľným zaoblením)
-                        ctx.save(); // Uložíme čistý stav
-                        
-                        if (applyRounded) {
-                            // Výpočet rádiusu – nesmie byť väčší ako polovica kratšej strany
-                            const radius = Math.min(Math.min(img.width, img.height) / 2, Math.max(20, Math.min(img.width, img.height) * 0.05));
-                            window.createRoundRectPath(ctx, 0, 0, img.width, img.height, radius);
-                            ctx.clip(); // Orežeme plátno na oblúk. Všetko nakreslené po tomto riadku bude len vo vnútri tohto oblúka.
-                        }
-
-                        if (applyMagic) { ctx.filter = 'saturate(1.25) contrast(1.15) brightness(1.05)'; }
-                        
-                        // Vykreslenie samotnej fotky
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        ctx.filter = 'none'; // Vypneme magic pre vodoznak
-                        ctx.restore(); // Zrušíme clip() pre hlavnú fotku, aby sme mohli kresliť logo všade
-
-                        // 3. VODOZNAK: Základné nastavenia
-                        ctx.globalAlpha = wmOpacity;
-                        const pad = Math.max(10, img.width * 0.02);
-
-                        // --- Kreslenie TEXTOVÉHO vodoznaku ---
-                        if (wmType === 'text' && wmText.trim() !== '') {
-                            const fontSize = Math.max(12, Math.floor(img.width * (wmSizePerc / 100))); 
-                            ctx.font = `900 ${fontSize}px sans-serif`; 
-                            ctx.fillStyle = 'white'; 
-                            ctx.shadowColor = 'rgba(0, 0, 0, 0.9)'; 
-                            ctx.shadowBlur = Math.max(4, fontSize / 4);
-                            ctx.textBaseline = (wmPos === 'tr' || wmPos === 'tl') ? 'top' : (wmPos === 'c' ? 'middle' : 'bottom');
-                            ctx.textAlign = (wmPos === 'tl' || wmPos === 'bl') ? 'left' : (wmPos === 'c' ? 'center' : 'right');
+                            const canvas = document.createElement('canvas');
+                            canvas.width = img.width; canvas.height = img.height;
+                            const ctx = canvas.getContext('2d');
                             
-                            let x, y;
-                            if (wmPos === 'br') { x = img.width - pad; y = img.height - pad; }
-                            else if (wmPos === 'bl') { x = pad; y = img.height - pad; }
-                            else if (wmPos === 'tr') { x = img.width - pad; y = pad; }
-                            else if (wmPos === 'tl') { x = pad; y = pad; }
-                            else if (wmPos === 'c') { x = img.width / 2; y = img.height / 2; }
-                            
-                            ctx.fillText(wmText, x, y);
-                        } 
-                        // --- Kreslenie LOGA (Tvoj detailne požiadovaný fix!) ---
-                        else if (wmType === 'logo' && window.customWatermarkImg && window.customWatermarkImg.complete && window.customWatermarkImg.naturalWidth > 0) {
-                            const w = img.width * (wmSizePerc / 100);
-                            const h = window.customWatermarkImg.naturalHeight * (w / window.customWatermarkImg.naturalWidth);
-                            
-                            // Výpočet pozície X a Y
-                            let x, y;
-                            if (wmPos === 'br') { x = img.width - w - pad; y = img.height - h - pad; }
-                            else if (wmPos === 'bl') { x = pad; y = img.height - h - pad; }
-                            else if (wmPos === 'tr') { x = img.width - w - pad; y = pad; }
-                            else if (wmPos === 'tl') { x = pad; y = pad; }
-                            else if (wmPos === 'c') { x = (img.width - w)/2; y = (img.height - h)/2; }
-                            
-                            ctx.save(); // Začíname novú samostatnú vrstvu pre logo
-                            
-                            // Ak má byť logo zaoblené, musíme použiť špeciálny trik pre Canvas:
-                            if (applyLogoRounded) {
-                                const logoRadius = Math.min(w, h) * 0.15; 
-                                
-                                // TRIK S TIEŇOM: Vytvoríme najprv "falošný" tieň nakreslením obdĺžnika, zatiaľ neorezaného clip()
-                                ctx.shadowColor = 'rgba(0, 0, 0, 0.6)'; 
-                                ctx.shadowBlur = 15;
-                                ctx.shadowOffsetX = 0;
-                                ctx.shadowOffsetY = 0;
-                                ctx.fillStyle = 'rgba(0,0,0,1)';
-                                
-                                window.createRoundRectPath(ctx, x, y, w, h, logoRadius);
-                                ctx.fill(); // Vykreslíme tento oblý čierny tvar len preto, aby vrhol krásny tieň
-                                
-                                // Vypneme tieň pre ďalšie kreslenie a nasadíme "Clipping masku" na obraz!
-                                ctx.shadowColor = 'transparent';
-                                ctx.shadowBlur = 0;
-                                ctx.clip(); // Teraz všetko po tomto (logo) bude orezané
-                                
+                            if (format === 'jpeg') {
+                                ctx.fillStyle = '#ffffff';
+                                ctx.fillRect(0, 0, canvas.width, canvas.height);
                             } else {
-                                // OSTRÉ HRANY LOGA: Jednoduchý tieň bez `clip()`, logo ostane obdĺžnikové
-                                ctx.shadowColor = 'rgba(0, 0, 0, 0.6)'; 
-                                ctx.shadowBlur = 15;
-                                ctx.shadowOffsetX = 0;
-                                ctx.shadowOffsetY = 0;
+                                ctx.clearRect(0, 0, canvas.width, canvas.height);
                             }
                             
-                            // Vykreslíme samotné logo
-                            ctx.drawImage(window.customWatermarkImg, x, y, w, h);
+                            ctx.save();
                             
-                            ctx.restore(); // Ukončíme úpravy loga
-                        }
-                        
-                        // Zresetujeme všetky efekty
-                        ctx.globalAlpha = 1.0; 
-                        ctx.shadowBlur = 0;
-                        ctx.shadowColor = 'transparent';
+                            if (applyRounded) {
+                                const radius = Math.min(Math.min(img.width, img.height) / 2, Math.max(20, Math.min(img.width, img.height) * 0.05));
+                                window.createRoundRectPath(ctx, 0, 0, img.width, img.height, radius);
+                                ctx.clip(); 
+                            }
 
-                        const quality = document.getElementById('quality-slider').value / 100;
-                        
-                        // ... Zvyšok zostáva nezmenený (ukladanie blob, vypisovanie DOM...)
-                        canvas.toBlob((blob) => {
+                            if (applyMagic) { ctx.filter = 'saturate(1.25) contrast(1.15) brightness(1.05)'; }
+                            
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                            ctx.filter = 'none';
+                            
+                            ctx.restore();
+
+                            ctx.globalAlpha = wmOpacity;
+                            const pad = Math.max(10, img.width * 0.02);
+
+                            if (wmType === 'text' && wmText.trim() !== '') {
+                                const fontSize = Math.max(12, Math.floor(img.width * (wmSizePerc / 100))); 
+                                ctx.font = `900 ${fontSize}px sans-serif`; ctx.fillStyle = 'white'; 
+                                ctx.shadowColor = 'rgba(0, 0, 0, 0.9)'; ctx.shadowBlur = Math.max(4, fontSize / 4);
+                                ctx.textBaseline = (wmPos === 'tr' || wmPos === 'tl') ? 'top' : (wmPos === 'c' ? 'middle' : 'bottom');
+                                ctx.textAlign = (wmPos === 'tl' || wmPos === 'bl') ? 'left' : (wmPos === 'c' ? 'center' : 'right');
+                                
+                                let x, y;
+                                if (wmPos === 'br') { x = img.width - pad; y = img.height - pad; }
+                                else if (wmPos === 'bl') { x = pad; y = img.height - pad; }
+                                else if (wmPos === 'tr') { x = img.width - pad; y = pad; }
+                                else if (wmPos === 'tl') { x = pad; y = pad; }
+                                else if (wmPos === 'c') { x = img.width / 2; y = img.height / 2; }
+                                
+                                ctx.fillText(wmText, x, y);
+                            } 
+                            else if (wmType === 'logo' && window.customWatermarkImg && window.customWatermarkImg.complete && window.customWatermarkImg.naturalWidth > 0) {
+                                const w = img.width * (wmSizePerc / 100);
+                                const h = window.customWatermarkImg.naturalHeight * (w / window.customWatermarkImg.naturalWidth);
+                                let x, y;
+                                if (wmPos === 'br') { x = img.width - w - pad; y = img.height - h - pad; }
+                                else if (wmPos === 'bl') { x = pad; y = img.height - h - pad; }
+                                else if (wmPos === 'tr') { x = img.width - w - pad; y = pad; }
+                                else if (wmPos === 'tl') { x = pad; y = pad; }
+                                else if (wmPos === 'c') { x = (img.width - w)/2; y = (img.height - h)/2; }
+                                
+                                ctx.save(); 
+                                if (applyLogoRounded) {
+                                    const logoRadius = Math.min(w, h) * 0.15; 
+                                    
+                                    ctx.shadowColor = 'rgba(0, 0, 0, 0.6)'; 
+                                    ctx.shadowBlur = 15;
+                                    ctx.shadowOffsetX = 0;
+                                    ctx.shadowOffsetY = 0;
+                                    ctx.fillStyle = 'rgba(0,0,0,1)';
+                                    
+                                    window.createRoundRectPath(ctx, x, y, w, h, logoRadius);
+                                    ctx.fill();
+                                    
+                                    ctx.shadowColor = 'transparent';
+                                    ctx.shadowBlur = 0;
+                                    ctx.clip();
+                                } else {
+                                    ctx.shadowColor = 'rgba(0, 0, 0, 0.6)'; 
+                                    ctx.shadowBlur = 15;
+                                    ctx.shadowOffsetX = 0;
+                                    ctx.shadowOffsetY = 0;
+                                }
+                                ctx.drawImage(window.customWatermarkImg, x, y, w, h);
+                                ctx.restore(); 
+                            }
+                            
+                            ctx.globalAlpha = 1.0; 
+                            ctx.shadowBlur = 0;
+                            ctx.shadowColor = 'transparent';
+
+                            const quality = document.getElementById('quality-slider').value / 100;
+                            
+                            canvas.toBlob((blob) => {
                                 if(!blob) return;
                                 const url = URL.createObjectURL(blob);
                                 
@@ -874,8 +855,6 @@
                                 const item = document.createElement('div');
                                 item.className = "bg-black/40 border border-white/10 rounded-2xl p-5 flex items-center justify-between hover:bg-black/60 transition-all duration-300 shadow-lg";
                                 
-                                // Úmyselne sme ostránili akékoľvek maskujúce CSS triedy ("rounded...") z <img src="${url}">!
-                                // Teraz ti prehliadač ukáže bez skrášľovania holú realitu toho, ako fotka vyzerá - ostrá alebo oblá.
                                 item.innerHTML = `
                                     <div class="flex items-center space-x-5 w-full">
                                         <div class="relative shrink-0 cursor-pointer group/thumb" onclick="window.openPreview(${thisIndex})">
