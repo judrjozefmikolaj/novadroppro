@@ -109,7 +109,7 @@
         <div id="ai-feedback" class="mt-3 text-[11px] text-cyan-300 font-bold hidden bg-cyan-500/10 p-2.5 rounded-lg border border-cyan-500/20"></div>
     </div>
 
-    <!-- DONATE MODAL (Vylepšený pre vlastnú sumu) -->
+    <!-- DONATE MODAL -->
     <div id="donate-modal" class="fixed inset-0 z-[80] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
         <div class="glass-panel w-full max-w-md p-8 rounded-[2rem] relative border-cyan-500/50 shadow-[0_0_150px_rgba(6,182,212,0.25)] text-center">
             <button onclick="closeDonateModal()" class="absolute top-5 right-6 text-slate-500 hover:text-white transition text-2xl font-light z-50">✕</button>
@@ -126,7 +126,6 @@
                 <button onclick="selectDonation(20, this)" class="donate-btn bg-black/50 border border-white/10 hover:border-cyan-400 rounded-xl py-3 px-5 text-white font-bold transition">20 €</button>
             </div>
             
-            <!-- Vlastná suma -->
             <div class="mb-6 px-4">
                 <input type="number" id="custom-donation" min="1" placeholder="Alebo zadajte vlastnú sumu (€)" oninput="clearDonationButtons()" class="w-full bg-black/50 border border-white/10 hover:border-cyan-400 focus:border-cyan-400 rounded-xl py-3 px-4 text-white text-center font-bold outline-none transition placeholder-slate-500 shadow-inner" data-i18n-placeholder="donate_custom">
             </div>
@@ -138,27 +137,22 @@
         </div>
     </div>
 
-    <!-- KINO MÓD (CAROUSEL LIVE PREVIEW) S LEPŠOU VIDITEĽNOSŤOU -->
+    <!-- KINO MÓD (CAROUSEL LIVE PREVIEW) -->
     <div id="preview-modal" class="fixed inset-0 z-[70] bg-black/95 backdrop-blur-2xl hidden items-center justify-center p-4 selection:bg-transparent">
         <button onclick="closePreview()" class="absolute top-6 right-6 md:top-10 md:right-10 text-slate-400 hover:text-white transition text-4xl font-light z-50">✕</button>
         
         <div class="relative w-full h-full flex flex-col items-center justify-center pt-8">
             <div class="relative w-full h-[65vh] flex items-center justify-center">
-                <!-- Ľavá šípka -->
                 <button onclick="prevImage(event)" class="absolute left-2 sm:left-10 z-50 text-white/40 hover:text-cyan-400 hover:scale-110 transition-all text-6xl md:text-8xl focus:outline-none select-none drop-shadow-lg">&lsaquo;</button>
                 
-                <!-- Ľavý rozostrený náhľad (Viac viditeľný) -->
                 <img id="prev-img" class="absolute left-0 lg:left-[4%] max-h-[45vh] w-[20%] object-contain opacity-50 blur-[2px] scale-90 transition-all duration-300 cursor-pointer hover:opacity-100 hover:blur-none hover:scale-95 hidden z-10" onclick="prevImage(event)">
                 
-                <!-- HLAVNÝ STREDOVÝ OBRÁZOK -->
                 <div class="relative z-30 flex items-center justify-center w-full max-w-[55vw] h-full">
-                    <img id="main-img" class="max-h-full max-w-full object-contain shadow-[0_0_80px_rgba(6,182,212,0.35)] transition-transform duration-300 rounded-xl">
+                    <img id="main-img" class="max-h-full max-w-full object-contain shadow-[0_0_80px_rgba(6,182,212,0.35)] transition-transform duration-300">
                 </div>
                 
-                <!-- Pravý rozostrený náhľad (Viac viditeľný) -->
                 <img id="next-img" class="absolute right-0 lg:right-[4%] max-h-[45vh] w-[20%] object-contain opacity-50 blur-[2px] scale-90 transition-all duration-300 cursor-pointer hover:opacity-100 hover:blur-none hover:scale-95 hidden z-10" onclick="nextImage(event)">
                 
-                <!-- Pravá šípka -->
                 <button onclick="nextImage(event)" class="absolute right-2 sm:right-10 z-50 text-white/40 hover:text-cyan-400 hover:scale-110 transition-all text-6xl md:text-8xl focus:outline-none select-none drop-shadow-lg">&rsaquo;</button>
             </div>
             
@@ -201,7 +195,6 @@
     <!-- HLAVIČKA -->
     <header class="fixed top-0 left-0 right-0 z-40 glass-panel border-x-0 border-t-0 rounded-none h-24 flex items-center">
         <div class="max-w-[90rem] mx-auto px-6 w-full flex items-center justify-between">
-            <!-- LOGO OTVÁRA DARCOVSKÉ OKNO -->
             <div class="flex items-center space-x-4 cursor-pointer group" onclick="openDonateModal()">
                 <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#020617] via-slate-900 to-cyan-900 flex items-center justify-center text-cyan-400 relative overflow-hidden animate-titan border border-cyan-400/80 shadow-[0_0_15px_rgba(6,182,212,0.4)]">
                     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
@@ -218,7 +211,6 @@
                     <span class="text-slate-400 font-bold mr-2" data-i18n="free_limit">Zadarmo:</span>
                     <span id="limit-counter" class="text-cyan-400 font-black tracking-widest text-sm">300 / 300</span>
                 </div>
-                <!-- Jazyky -->
                 <div class="flex bg-black/50 rounded-xl p-1.5 border border-white/10 shadow-inner">
                     <button onclick="setLanguage('sk', this)" class="lang-btn text-[10px] font-black px-3 py-2 rounded-lg transition text-cyan-400 hover:bg-white/10">SK</button>
                     <button onclick="setLanguage('en', this)" class="lang-btn text-[10px] font-black px-3 py-2 rounded-lg transition text-slate-400 hover:bg-white/10">EN</button>
@@ -420,7 +412,7 @@
                     exif_desc: "Maže GPS a dáta z fotoaparátu.", magic_desc: "Oživí farby a presvetlí tiene.",
                     drop_title: "Presuňte súbory do zóny", drop_desc: "Spracujte až 300 fotografií hromadne (Odporúčame WebP/PNG)",
                     results_title: "Spracované súbory", click_preview: "👉 Kliknite na fotku pre kino náhľad", btn_download: "Stiahnuť", btn_download_single: "⬇ Stiahnuť túto fotku", btn_dl_all: "⬇ Stiahnuť všetky", free_limit: "Zadarmo:", btn_pro: "Pro",
-                    donate_title: "Podporte projekt", donate_text1: "Ak vám nástroj ušetril čas, môžete náš vývoj podporiť ľubovoľným darom.", donate_text2: "50% z každého daru venujeme na charitu.", donate_btn: "Darovať a pomôcť", donate_custom: "Alebo zadajte vlastnú sumu (€)"
+                    donate_title: "Podporte projekt", donate_text1: "Ak vám nástroj ušetril čas, môžete náš vývoj podporiť ľubovoľným darom.", donate_text2: "50% z každého daru venujeme na charitu.", donate_btn: "Darovať a pomôcť", donate_custom: "Zadajte vlastnú sumu (€)"
                 },
                 en: {
                     seo_title: "NovaDrop | Blazing Fast Image Optimizer", badge_text: "Local processing • Zero data leak risk",
@@ -434,7 +426,7 @@
                     exif_desc: "Strips GPS and camera metadata.", magic_desc: "Boosts colors and brightens shadows.",
                     drop_title: "Drop files into the zone", drop_desc: "Process up to 300 photos in bulk (Use WebP/PNG)",
                     results_title: "Processed Files", click_preview: "👉 Click image for cinematic preview", btn_download: "Download", btn_download_single: "⬇ Download this photo", btn_dl_all: "⬇ Download All", free_limit: "Free:", btn_pro: "Pro",
-                    donate_title: "Support the project", donate_text1: "If this tool saved your time, consider supporting our development.", donate_text2: "We donate 50% to charity.", donate_btn: "Donate & Help", donate_custom: "Or enter a custom amount (€)"
+                    donate_title: "Support the project", donate_text1: "If this tool saved your time, consider supporting our development.", donate_text2: "We donate 50% to charity.", donate_btn: "Donate & Help", donate_custom: "Enter a custom amount (€)"
                 },
                 de: {
                     seo_title: "NovaDrop | Extrem schnelle Bildoptimierung", badge_text: "Lokale Verarbeitung • Kein Datenleck",
@@ -448,7 +440,7 @@
                     exif_desc: "Löscht GPS- und Kameradaten.", magic_desc: "Belebt Farben und hellt Schatten auf.",
                     drop_title: "Dateien hier ablegen", drop_desc: "Bis zu 300 Fotos gleichzeitig verarbeiten",
                     results_title: "Verarbeitete Dateien", click_preview: "👉 Klicken Sie für Kino-Vorschau", btn_download: "Laden", btn_download_single: "⬇ Foto laden", btn_dl_all: "⬇ Alle herunterladen", free_limit: "Frei:", btn_pro: "Pro",
-                    donate_title: "Projekt unterstützen", donate_text1: "Wenn Ihnen dieses Tool Zeit gespart hat, unterstützen Sie unsere Entwicklung.", donate_text2: "50% gehen an wohltätige Zwecke.", donate_btn: "Spenden & Helfen", donate_custom: "Oder eigenen Betrag eingeben (€)"
+                    donate_title: "Projekt unterstützen", donate_text1: "Wenn Ihnen dieses Tool Zeit gespart hat, unterstützen Sie unsere Entwicklung.", donate_text2: "50% gehen an wohltätige Zwecke.", donate_btn: "Spenden & Helfen", donate_custom: "Eigener Betrag (€)"
                 },
                 es: {
                     seo_title: "NovaDrop | Optimizador de imágenes ultrarrápido", badge_text: "Procesamiento local • Cero riesgo de fuga",
@@ -462,7 +454,7 @@
                     exif_desc: "Elimina los metadatos y GPS.", magic_desc: "Revive los colores y mejora las sombras.",
                     drop_title: "Suelta los archivos aquí", drop_desc: "Procesa hasta 300 photos a la vez",
                     results_title: "Archivos procesados", click_preview: "👉 Haz clic para vista previa", btn_download: "Descargar", btn_download_single: "⬇ Descargar foto", btn_dl_all: "⬇ Descargar todos", free_limit: "Gratis:", btn_pro: "Pro",
-                    donate_title: "Apoya el proyecto", donate_text1: "Si esta herramienta te ahorró tiempo, considera apoyar nuestro desarrollo.", donate_text2: "Donamos el 50% a la caridad.", donate_btn: "Donar y Ayudar", donate_custom: "O ingresa un monto personalizado (€)"
+                    donate_title: "Apoya el proyecto", donate_text1: "Si esta herramienta te ahorró tiempo, considera apoyar nuestro desarrollo.", donate_text2: "Donamos el 50% a la caridad.", donate_btn: "Donar y Ayudar", donate_custom: "Monto personalizado (€)"
                 }
             };
 
@@ -644,15 +636,23 @@
                 }, 400);
             };
 
-            window.freeUsed = 0; 
+            // LOCAL STORAGE PRE LIMIT POUŽITIA
             window.FREE_LIMIT = 300; 
+            window.freeUsed = parseInt(localStorage.getItem('novadrop_usage')) || 0;
+            
             window.openProModal = function() { document.getElementById('pro-modal').classList.add('modal-active'); };
             window.closeProModal = function() { document.getElementById('pro-modal').classList.remove('modal-active'); };
+            
             window.updateCounter = function() {
-                const left = window.FREE_LIMIT - window.freeUsed;
+                localStorage.setItem('novadrop_usage', window.freeUsed);
+                const left = Math.max(0, window.FREE_LIMIT - window.freeUsed);
                 document.getElementById('limit-counter').innerText = `${left} / ${window.FREE_LIMIT}`;
-                if(left <= 0) document.getElementById('limit-counter').className = 'text-red-400 font-black tracking-widest text-sm animate-pulse drop-shadow-[0_0_5px_rgba(239,68,68,0.8)]';
+                if(left <= 0) {
+                    document.getElementById('limit-counter').className = 'text-red-400 font-black tracking-widest text-sm animate-pulse drop-shadow-[0_0_5px_rgba(239,68,68,0.8)]';
+                }
             };
+            // Okamžite aktualizuje zobrazenie po načítaní stránky
+            window.updateCounter();
 
             const dropZone = document.getElementById('drop-zone');
             const fileInput = document.getElementById('file-input');
@@ -704,7 +704,7 @@
                 const isSingleFile = filesToProcess.length === 1; 
                 
                 if(window.freeUsed + filesToProcess.length > window.FREE_LIMIT) {
-                    const available = window.FREE_LIMIT - window.freeUsed;
+                    const available = Math.max(0, window.FREE_LIMIT - window.freeUsed);
                     if(available <= 0) { window.openProModal(); return; }
                     filesToProcess = filesToProcess.slice(0, available);
                     setTimeout(window.openProModal, 1500); 
@@ -764,8 +764,6 @@
                             
                             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                             ctx.filter = 'none';
-                            
-                            ctx.restore();
 
                             ctx.globalAlpha = wmOpacity;
                             const pad = Math.max(10, img.width * 0.02);
@@ -822,6 +820,7 @@
                                 ctx.restore(); 
                             }
                             
+                            ctx.restore(); 
                             ctx.globalAlpha = 1.0; 
                             ctx.shadowBlur = 0;
                             ctx.shadowColor = 'transparent';
