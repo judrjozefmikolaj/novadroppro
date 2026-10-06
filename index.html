@@ -508,9 +508,7 @@
         }
 
         function processDonation() {
-            let finalAmount = document.getElementById('custom-donation').value || selectedDonation;
-            if(!finalAmount || finalAmount <= 0) { alert('Prosím, zadajte platnú sumu.'); return; }
-            alert(`Ďakujeme za vašu podporu! Tu sa otvorí bezpečná Stripe platba pre sumu: ${finalAmount} €`);
+            window.location.href = 'https://buy.stripe.com/7sY7sNegjecdgrY4V4gQE01';
         }
 
         /* --- 3. WATERMARK STUDIO --- */
