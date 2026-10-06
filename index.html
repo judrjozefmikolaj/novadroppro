@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="sk" id="html-root">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8132232743513894"
-     crossorigin="anonymous"></script>
+    <!-- GOOGLE ADSENSE KÓD -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8132232743513894" crossorigin="anonymous"></script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +19,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- SEO DATA -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -32,7 +33,7 @@
     </script>
 
     <style>
-        /* OMEGA GLASSMORPHISM */
+        /* GLASSMORPHISM */
         .glass-panel {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
             backdrop-filter: blur(36px);
@@ -54,18 +55,17 @@
         .pro-gradient { background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #ea580c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .magic-gradient { background: linear-gradient(135deg, #f472b6 0%, #d946ef 50%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
+        /* VLASTNÉ SLIDERY A POLIA */
         input[type=range] { -webkit-appearance: none; background: rgba(255,255,255,0.1); border-radius: 8px; height: 6px; border: 1px solid rgba(255,255,255,0.05); outline: none; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; background: #06b6d4; cursor: pointer; box-shadow: 0 0 15px rgba(6, 182, 212, 0.8); border: 2px solid #fff; transition: transform 0.2s; }
         input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.3); }
-        
-        /* Hide number input spinners */
         input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         input[type=number] { -moz-appearance: textfield; }
 
         .wm-tab { background: transparent; color: #94a3b8; border: 1px solid transparent; cursor: pointer; transition: all 0.3s; }
         .wm-tab.active { background: rgba(6, 182, 212, 0.2); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.4); box-shadow: 0 0 15px rgba(6,182,212,0.2); }
 
-        /* Toggles (Prepínače) */
+        /* PREPÍNAČE (TOGGLES) */
         .toggle-container { position: relative; width: 44px; height: 24px; display: inline-block; }
         .toggle-checkbox { display: none; }
         .toggle-label { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #1e293b; border-radius: 24px; transition: .3s; border: 1px solid rgba(255,255,255,0.1); }
@@ -74,7 +74,6 @@
         #exif-toggle:checked + .toggle-label { background-color: #10b981; border-color: #10b981; box-shadow: 0 0 15px rgba(16,185,129,0.5); }
         #rounded-toggle:checked + .toggle-label { background: linear-gradient(135deg, #3b82f6, #06b6d4); border-color: transparent; box-shadow: 0 0 15px rgba(59,130,246,0.6); }
         #magic-toggle:checked + .toggle-label { background: linear-gradient(135deg, #d946ef, #8b5cf6); border-color: transparent; box-shadow: 0 0 15px rgba(217,70,239,0.6); }
-        
         input:checked + .toggle-label:before { transform: translateX(20px); }
 
         /* Mini Toggle pre zaoblenie loga */
@@ -82,10 +81,10 @@
         #logo-round-toggle:checked + .toggle-label { background-color: #06b6d4; border-color: #06b6d4; }
         #logo-round-toggle:checked + .toggle-label:before { transform: translateX(16px); }
 
+        /* SCROLLBAR & MODALS */
         .custom-scroll::-webkit-scrollbar { width: 6px; }
         .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; }
         .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
-        
         .modal-active { display: flex !important; animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes popIn { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
     </style>
@@ -110,7 +109,7 @@
         <div id="ai-feedback" class="mt-3 text-[11px] text-cyan-300 font-bold hidden bg-cyan-500/10 p-2.5 rounded-lg border border-cyan-500/20"></div>
     </div>
 
-    <!-- DONATE MODAL (Vylepšený pre vlastnú sumu) -->
+    <!-- DONATE MODAL -->
     <div id="donate-modal" class="fixed inset-0 z-[80] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
         <div class="glass-panel w-full max-w-md p-8 rounded-[2rem] relative border-cyan-500/50 shadow-[0_0_150px_rgba(6,182,212,0.25)] text-center">
             <button onclick="closeDonateModal()" class="absolute top-5 right-6 text-slate-500 hover:text-white transition text-2xl font-light z-50">✕</button>
@@ -127,7 +126,6 @@
                 <button onclick="selectDonation(20, this)" class="donate-btn bg-black/50 border border-white/10 hover:border-cyan-400 rounded-xl py-3 px-5 text-white font-bold transition">20 €</button>
             </div>
             
-            <!-- Vlastná suma -->
             <div class="mb-6 px-4">
                 <input type="number" id="custom-donation" min="1" placeholder="Alebo zadajte vlastnú sumu (€)" oninput="clearDonationButtons()" class="w-full bg-black/50 border border-white/10 hover:border-cyan-400 focus:border-cyan-400 rounded-xl py-3 px-4 text-white text-center font-bold outline-none transition placeholder-slate-500 shadow-inner" data-i18n-placeholder="donate_custom">
             </div>
@@ -139,27 +137,23 @@
         </div>
     </div>
 
-    <!-- KINO MÓD (CAROUSEL LIVE PREVIEW) S LEPŠOU VIDITEĽNOSŤOU -->
+    <!-- KINO MÓD (CAROUSEL LIVE PREVIEW) -->
     <div id="preview-modal" class="fixed inset-0 z-[70] bg-black/95 backdrop-blur-2xl hidden items-center justify-center p-4 selection:bg-transparent">
         <button onclick="closePreview()" class="absolute top-6 right-6 md:top-10 md:right-10 text-slate-400 hover:text-white transition text-4xl font-light z-50">✕</button>
         
         <div class="relative w-full h-full flex flex-col items-center justify-center pt-8">
             <div class="relative w-full h-[65vh] flex items-center justify-center">
-                <!-- Ľavá šípka -->
                 <button onclick="prevImage(event)" class="absolute left-2 sm:left-10 z-50 text-white/40 hover:text-cyan-400 hover:scale-110 transition-all text-6xl md:text-8xl focus:outline-none select-none drop-shadow-lg">&lsaquo;</button>
                 
-                <!-- Ľavý rozostrený náhľad (Viac viditeľný) -->
                 <img id="prev-img" class="absolute left-0 lg:left-[4%] max-h-[45vh] w-[20%] object-contain opacity-50 blur-[2px] scale-90 transition-all duration-300 cursor-pointer hover:opacity-100 hover:blur-none hover:scale-95 hidden z-10" onclick="prevImage(event)">
                 
-                <!-- HLAVNÝ STREDOVÝ OBRÁZOK -->
+                <!-- STREDOVÝ OBRÁZOK (Bez maskujúcich CSS oblúkov, zobrazuje reálnu hranatosť/zaoblenie) -->
                 <div class="relative z-30 flex items-center justify-center w-full max-w-[55vw] h-full">
-                    <img id="main-img" class="max-h-full max-w-full object-contain shadow-[0_0_80px_rgba(6,182,212,0.35)] transition-transform duration-300 rounded-xl">
+                    <img id="main-img" class="max-h-full max-w-full object-contain shadow-[0_0_80px_rgba(6,182,212,0.35)] transition-transform duration-300">
                 </div>
                 
-                <!-- Pravý rozostrený náhľad (Viac viditeľný) -->
                 <img id="next-img" class="absolute right-0 lg:right-[4%] max-h-[45vh] w-[20%] object-contain opacity-50 blur-[2px] scale-90 transition-all duration-300 cursor-pointer hover:opacity-100 hover:blur-none hover:scale-95 hidden z-10" onclick="nextImage(event)">
                 
-                <!-- Pravá šípka -->
                 <button onclick="nextImage(event)" class="absolute right-2 sm:right-10 z-50 text-white/40 hover:text-cyan-400 hover:scale-110 transition-all text-6xl md:text-8xl focus:outline-none select-none drop-shadow-lg">&rsaquo;</button>
             </div>
             
@@ -202,7 +196,6 @@
     <!-- HLAVIČKA -->
     <header class="fixed top-0 left-0 right-0 z-40 glass-panel border-x-0 border-t-0 rounded-none h-24 flex items-center">
         <div class="max-w-[90rem] mx-auto px-6 w-full flex items-center justify-between">
-            <!-- LOGO OTVÁRA DARCOVSKÉ OKNO -->
             <div class="flex items-center space-x-4 cursor-pointer group" onclick="openDonateModal()">
                 <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#020617] via-slate-900 to-cyan-900 flex items-center justify-center text-cyan-400 relative overflow-hidden animate-titan border border-cyan-400/80 shadow-[0_0_15px_rgba(6,182,212,0.4)]">
                     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
@@ -219,7 +212,6 @@
                     <span class="text-slate-400 font-bold mr-2" data-i18n="free_limit">Zadarmo:</span>
                     <span id="limit-counter" class="text-cyan-400 font-black tracking-widest text-sm">300 / 300</span>
                 </div>
-                <!-- Jazyky -->
                 <div class="flex bg-black/50 rounded-xl p-1.5 border border-white/10 shadow-inner">
                     <button onclick="setLanguage('sk', this)" class="lang-btn text-[10px] font-black px-3 py-2 rounded-lg transition text-cyan-400 hover:bg-white/10">SK</button>
                     <button onclick="setLanguage('en', this)" class="lang-btn text-[10px] font-black px-3 py-2 rounded-lg transition text-slate-400 hover:bg-white/10">EN</button>
@@ -255,7 +247,7 @@
             
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-8">
                 
-                <!-- Stĺpec 1: Formát & SEO -->
+                <!-- STĹPEC 1 -->
                 <div class="bg-black/40 p-6 rounded-3xl border border-white/10 flex flex-col justify-between space-y-5 shadow-inner">
                     <h3 class="text-[11px] font-black text-slate-500 uppercase tracking-widest border-b border-white/5 pb-2">⚙️ Základ & SEO</h3>
                     <div>
@@ -281,7 +273,7 @@
                     </div>
                 </div>
 
-                <!-- Stĺpec 2: WATERMARK STUDIO -->
+                <!-- STĹPEC 2: WATERMARK -->
                 <div class="bg-black/40 p-6 rounded-3xl border border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.1)] flex flex-col space-y-4 relative">
                     <h3 class="text-[11px] font-black text-cyan-400 uppercase tracking-widest border-b border-white/5 pb-2" data-i18n="wm_title">💧 Watermark Studio</h3>
                     
@@ -302,7 +294,8 @@
                         </label>
                         <div id="wm-logo-preview-box" class="hidden items-center justify-between p-2 bg-black/40 rounded-xl border border-white/5 shadow-inner">
                             <div class="flex items-center overflow-hidden">
-                                <img id="wm-logo-preview-img" src="" class="max-h-6 object-contain rounded shrink-0">
+                                <!-- Zobrazenie ostrých hrán loga, bez falošného zaoblenia -->
+                                <img id="wm-logo-preview-img" src="" class="max-h-6 object-contain shrink-0">
                                 <span id="wm-logo-filename" class="text-[10px] text-cyan-400 font-black ml-2 truncate max-w-[80px]"></span>
                             </div>
                             <div class="flex items-center space-x-2 border-l border-white/10 pl-2 shrink-0">
@@ -336,7 +329,7 @@
                     </div>
                 </div>
 
-                <!-- Stĺpec 3: Smart Funkcie -->
+                <!-- STĹPEC 3: SMART FUNKCIE -->
                 <div class="bg-black/40 p-6 rounded-3xl border border-white/10 shadow-inner flex flex-col justify-between space-y-4">
                     <h3 class="text-[11px] font-black text-slate-500 uppercase tracking-widest border-b border-white/5 pb-2">🚀 Smart Funkcie</h3>
                     
@@ -353,7 +346,7 @@
 
                     <div class="flex items-center justify-between bg-black/30 p-3 rounded-2xl border border-white/5 shadow-inner">
                         <div>
-                            <p class="text-sm font-black text-white flex items-center"><span class="text-emerald-400 mr-2 text-lg drop-shadow-[0_0_5px_rgba(16,185,129,0.8)]">🛡️️</span> Privacy Shield</p>
+                            <p class="text-sm font-black text-white flex items-center"><span class="text-emerald-400 mr-2 text-lg drop-shadow-[0_0_5px_rgba(16,185,129,0.8)]">🛡️</span> Privacy Shield</p>
                             <p class="text-[9px] text-slate-400 mt-0.5 font-bold" data-i18n="exif_desc">Maže GPS/EXIF z fotiek.</p>
                         </div>
                         <div class="toggle-container shrink-0 ml-2">
@@ -404,445 +397,491 @@
         </div>
     </main>
 
+    <!-- CORE APLIKAČNÝ SKRIPT -->
     <script>
-        /* --- 1. LOKALIZÁCIA --- */
-        const dict = {
-            sk: {
-                seo_title: "NovaDrop | Rýchla konverzia a optimalizácia", badge_text: "Lokálne spracovanie • Nulové riziko",
-                h1_part1: "Nová éra optimalizácie.", h1_part2: "Bleskovo a bezpečne.",
-                subtitle: "Kompresia, zaoblené rohy, odstránenie EXIF, Magic Enhance, SEO premenovanie a vlastné LOGO. Všetko vo vašom prehliadači.",
-                target_format: "Výstupný formát", quality: "Kvalita kompresie", seo_rename: "SEO Názov",
-                wm_title: "💧 Watermark Studio", wm_text_tab: "TEXT", wm_logo_tab: "LOGO", wm_upload: "Nahrať vlastné Logo", wm_no_logo: "Žiadne logo", wm_logo_round: "Zaobliť Logo",
-                pos_br: "Vpravo dole", pos_bl: "Vľavo dole", pos_tr: "Vpravo hore", pos_tl: "Vľavo hore", pos_c: "Stred",
-                wm_size: "Veľkosť", wm_opacity: "Krytie",
-                round_title: "Zaoblené rohy", round_desc: "Zreže hrany do moderného oblúka.",
-                exif_desc: "Maže GPS a dáta z fotoaparátu.", magic_desc: "Oživí farby a presvetlí tiene.",
-                drop_title: "Presuňte súbory do zóny", drop_desc: "Spracujte až 300 fotografií hromadne (Odporúčame WebP/PNG)",
-                results_title: "Spracované súbory", click_preview: "👉 Kliknite na fotku pre kino náhľad", btn_download: "Stiahnuť", btn_download_single: "⬇ Stiahnuť túto fotku", btn_dl_all: "⬇ Stiahnuť všetky", free_limit: "Zadarmo:", btn_pro: "Pro",
-                donate_title: "Podporte projekt", donate_text1: "Ak vám nástroj ušetril čas, môžete náš vývoj podporiť ľubovoľným darom.", donate_text2: "50% z každého daru venujeme na charitu.", donate_btn: "Darovať a pomôcť", donate_custom: "Alebo zadajte vlastnú sumu (€)"
-            },
-            en: {
-                seo_title: "NovaDrop | Blazing Fast Image Optimizer", badge_text: "Local processing • Zero data leak risk",
-                h1_part1: "The new era of optimization.", h1_part2: "Fast and secure.",
-                subtitle: "Compress, round corners, strip EXIF, apply Magic Enhance, auto-rename and add your custom Logo.",
-                target_format: "Output Format", quality: "Quality", seo_rename: "SEO Filename",
-                wm_title: "💧 Watermark Studio", wm_text_tab: "TEXT", wm_logo_tab: "LOGO", wm_upload: "Upload Custom Logo", wm_no_logo: "No logo uploaded", wm_logo_round: "Round Logo",
-                pos_br: "Bottom Right", pos_bl: "Bottom Left", pos_tr: "Top Right", pos_tl: "Top Left", pos_c: "Center",
-                wm_size: "Size", wm_opacity: "Opacity",
-                round_title: "Rounded Corners", round_desc: "Cuts edges into a modern curve.",
-                exif_desc: "Strips GPS and camera metadata.", magic_desc: "Boosts colors and brightens shadows.",
-                drop_title: "Drop files into the zone", drop_desc: "Process up to 300 photos in bulk (Use WebP/PNG)",
-                results_title: "Processed Files", click_preview: "👉 Click image for cinematic preview", btn_download: "Download", btn_download_single: "⬇ Download this photo", btn_dl_all: "⬇ Download All", free_limit: "Free:", btn_pro: "Pro",
-                donate_title: "Support the project", donate_text1: "If this tool saved your time, consider supporting our development.", donate_text2: "We donate 50% to charity.", donate_btn: "Donate & Help", donate_custom: "Or enter a custom amount (€)"
-            },
-            de: {
-                seo_title: "NovaDrop | Extrem schnelle Bildoptimierung", badge_text: "Lokale Verarbeitung • Kein Datenleck",
-                h1_part1: "Die neue Ära der Optimierung.", h1_part2: "Schnell und sicher.",
-                subtitle: "Komprimieren, abgerundete Ecken, Daten entfernen, SEO-Namen, Farben verbessern und Logo hinzufügen.",
-                target_format: "Zielformat", quality: "Qualität", seo_rename: "SEO Name",
-                wm_title: "💧 Watermark Studio", wm_text_tab: "TEXT", wm_logo_tab: "LOGO", wm_upload: "Eigenes Logo hochladen", wm_no_logo: "Kein Logo", wm_logo_round: "Logo abrunden",
-                pos_br: "Unten Rechts", pos_bl: "Unten Links", pos_tr: "Oben Rechts", pos_tl: "Oben Links", pos_c: "Mitte",
-                wm_size: "Größe", wm_opacity: "Deckkraft",
-                round_title: "Abgerundete Ecken", round_desc: "Schneidet Kanten in moderne Kurven.",
-                exif_desc: "Löscht GPS- und Kameradaten.", magic_desc: "Belebt Farben und hellt Schatten auf.",
-                drop_title: "Dateien hier ablegen", drop_desc: "Bis zu 300 Fotos gleichzeitig verarbeiten",
-                results_title: "Verarbeitete Dateien", click_preview: "👉 Klicken Sie für Kino-Vorschau", btn_download: "Laden", btn_download_single: "⬇ Foto laden", btn_dl_all: "⬇ Alle herunterladen", free_limit: "Frei:", btn_pro: "Pro",
-                donate_title: "Projekt unterstützen", donate_text1: "Wenn Ihnen dieses Tool Zeit gespart hat, unterstützen Sie unsere Entwicklung.", donate_text2: "50% gehen an wohltätige Zwecke.", donate_btn: "Spenden & Helfen", donate_custom: "Oder eigenen Betrag eingeben (€)"
-            },
-            es: {
-                seo_title: "NovaDrop | Optimizador de imágenes ultrarrápido", badge_text: "Procesamiento local • Cero riesgo de fuga",
-                h1_part1: "La nueva era de la optimización.", h1_part2: "Rápida y segura.",
-                subtitle: "Comprime, redondea esquinas, renombra para SEO, elimina EXIF, mejora colores y añade tu propio logo.",
-                target_format: "Formato", quality: "Calidad", seo_rename: "Nombre SEO",
-                wm_title: "💧 Watermark Studio", wm_text_tab: "TEXTO", wm_logo_tab: "LOGO", wm_upload: "Subir Logo (PNG/JPG)", wm_no_logo: "Sin logo", wm_logo_round: "Logo redondo",
-                pos_br: "Abajo Derecha", pos_bl: "Abajo Izquierda", pos_tr: "Arriba Derecha", pos_tl: "Arriba Izquierda", pos_c: "Centro",
-                wm_size: "Tamaño", wm_opacity: "Opacidad",
-                round_title: "Esquinas Redondeadas", round_desc: "Corta los bordes en curvas modernas.",
-                exif_desc: "Elimina los metadatos y GPS.", magic_desc: "Revive los colores y mejora las sombras.",
-                drop_title: "Suelta los archivos aquí", drop_desc: "Procesa hasta 300 fotos a la vez",
-                results_title: "Archivos procesados", click_preview: "👉 Clic para vista previa", btn_download: "Descargar", btn_download_single: "⬇ Descargar foto", btn_dl_all: "⬇ Descargar todos", free_limit: "Gratis:", btn_pro: "Pro",
-                donate_title: "Apoya el proyecto", donate_text1: "Si esta herramienta te ahorró tiempo, considera apoyar nuestro desarrollo.", donate_text2: "Donamos el 50% a la caridad.", donate_btn: "Donar y Ayudar", donate_custom: "O ingresa un monto personalizado (€)"
-            }
-        };
+        // Inicializácia pripravená hneď po načítaní HTML
+        document.addEventListener('DOMContentLoaded', () => {
 
-        let currentLang = 'sk';
-        function setLanguage(lang, btnElement) {
-            currentLang = lang; document.documentElement.lang = lang;
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n'); if (dict[lang] && dict[lang][key]) el.innerHTML = dict[lang][key];
-            });
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-                const key = el.getAttribute('data-i18n-placeholder'); if (dict[lang] && dict[lang][key]) el.placeholder = dict[lang][key];
-            });
-            document.title = dict[lang]['seo_title'];
-            if(btnElement) {
-                document.querySelectorAll('.lang-btn').forEach(b => { b.classList.remove('text-cyan-400'); b.classList.add('text-slate-400'); });
-                btnElement.classList.remove('text-slate-400'); btnElement.classList.add('text-cyan-400');
-            }
-            document.querySelectorAll('.download-link').forEach(btn => { btn.innerHTML = dict[lang]['btn_download']; });
-            if(document.getElementById('preview-modal').classList.contains('modal-active')) {
-                document.getElementById('preview-download-btn').innerHTML = `⬇ ${dict[currentLang]['btn_download_single']}`;
-            }
-        }
-
-        /* --- 2. DONATION MODAL (Plne funkčný s custom sumou) --- */
-        let selectedDonation = 5;
-        
-        function openDonateModal() { document.getElementById('donate-modal').classList.add('modal-active'); }
-        function closeDonateModal() { document.getElementById('donate-modal').classList.remove('modal-active'); }
-        
-        function selectDonation(amount, btn) {
-            selectedDonation = amount;
-            document.getElementById('custom-donation').value = '';
-            document.querySelectorAll('.donate-btn').forEach(b => {
-                b.classList.remove('border-cyan-400', 'bg-cyan-500/20');
-                b.classList.add('border-white/10', 'bg-black/50');
-            });
-            btn.classList.remove('border-white/10', 'bg-black/50');
-            btn.classList.add('border-cyan-400', 'bg-cyan-500/20');
-        }
-
-        function clearDonationButtons() {
-            selectedDonation = document.getElementById('custom-donation').value;
-            document.querySelectorAll('.donate-btn').forEach(b => {
-                b.classList.remove('border-cyan-400', 'bg-cyan-500/20');
-                b.classList.add('border-white/10', 'bg-black/50');
-            });
-        }
-
-        function processDonation() {
-            window.location.href = 'https://buy.stripe.com/7sY7sNegjecdgrY4V4gQE01';
-        }
-
-        /* --- 3. WATERMARK STUDIO --- */
-        let customWatermarkImg = null;
-
-        function switchWmTab(tabType) {
-            document.getElementById('wm-type-val').value = tabType;
-            if(tabType === 'text') {
-                document.getElementById('btn-wm-text').classList.add('active'); document.getElementById('btn-wm-logo').classList.remove('active');
-                document.getElementById('wm-text-container').style.display = 'block'; document.getElementById('wm-logo-container').style.display = 'none';
-            } else {
-                document.getElementById('btn-wm-logo').classList.add('active'); document.getElementById('btn-wm-text').classList.remove('active');
-                document.getElementById('wm-logo-container').style.display = 'flex'; document.getElementById('wm-text-container').style.display = 'none';
-            }
-        }
-
-        document.getElementById('wm-logo-file').addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => { 
-                    const tempImg = new Image();
-                    tempImg.onload = () => {
-                        customWatermarkImg = tempImg; 
-                        document.getElementById('wm-logo-preview-img').src = event.target.result;
-                        document.getElementById('wm-logo-filename').innerHTML = `✅ <span class="text-cyan-400">${file.name}</span>`;
-                        document.getElementById('wm-logo-preview-box').classList.remove('hidden');
-                        document.getElementById('wm-logo-preview-box').classList.add('flex');
-                    };
-                    tempImg.src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-            e.target.value = ''; 
-        });
-
-        document.getElementById('wm-size').addEventListener('input', (e) => document.getElementById('wm-size-val').innerText = e.target.value + '%');
-        document.getElementById('wm-opacity').addEventListener('input', (e) => document.getElementById('wm-opacity-val').innerText = e.target.value + '%');
-
-        /* --- 4. CAROUSEL LIVE PREVIEW --- */
-        let previewItems = [];
-        let currentPreviewIndex = 0;
-
-        function updatePreviewUI() {
-            if (previewItems.length === 0) return;
-            const item = previewItems[currentPreviewIndex];
-            
-            document.getElementById('main-img').src = item.url;
-            document.getElementById('preview-filename').innerText = item.filename;
-            const dlBtn = document.getElementById('preview-download-btn');
-            dlBtn.href = item.url; dlBtn.download = item.filename;
-            dlBtn.innerHTML = `⬇ ${dict[currentLang]['btn_download_single']}`;
-            
-            const prevImg = document.getElementById('prev-img');
-            if (currentPreviewIndex > 0) {
-                prevImg.src = previewItems[currentPreviewIndex - 1].url;
-                prevImg.classList.remove('hidden');
-            } else { prevImg.classList.add('hidden'); }
-            
-            const nextImg = document.getElementById('next-img');
-            if (currentPreviewIndex < previewItems.length - 1) {
-                nextImg.src = previewItems[currentPreviewIndex + 1].url;
-                nextImg.classList.remove('hidden');
-            } else { nextImg.classList.add('hidden'); }
-        }
-
-        function prevImage(e) { if(e) e.stopPropagation(); if (currentPreviewIndex > 0) { currentPreviewIndex--; updatePreviewUI(); } }
-        function nextImage(e) { if(e) e.stopPropagation(); if (currentPreviewIndex < previewItems.length - 1) { currentPreviewIndex++; updatePreviewUI(); } }
-
-        function openPreview(index) {
-            currentPreviewIndex = index; updatePreviewUI();
-            document.getElementById('preview-modal').classList.add('modal-active');
-            document.addEventListener('keydown', handleKey);
-        }
-
-        function closePreview() { 
-            document.getElementById('preview-modal').classList.remove('modal-active'); 
-            document.removeEventListener('keydown', handleKey);
-        }
-
-        function handleKey(e) {
-            if (e.key === 'ArrowLeft') prevImage();
-            if (e.key === 'ArrowRight') nextImage();
-            if (e.key === 'Escape') closePreview();
-        }
-
-        /* --- 5. AI ASISTENT --- */
-        function processAI() {
-            const input = document.getElementById('ai-prompt-box').value.toLowerCase();
-            const originalInput = document.getElementById('ai-prompt-box').value;
-            const feedback = document.getElementById('ai-feedback');
-            if(!input) return;
-            
-            feedback.classList.remove('hidden'); feedback.innerText = '⚙️ Nova AI spracováva...';
-            setTimeout(() => {
-                let match;
-                const wmRegex = /(?:vodoznak|watermark|marca de agua)\s*(?:je\s*)?['"]([^'"]+)['"]/i;
-                
-                if (input.match(/zaob|round|curv|roh/i)) { document.getElementById('rounded-toggle').checked = !document.getElementById('rounded-toggle').checked; feedback.innerText = '✨ Prepínam zaoblené rohy pre fotku.'; }
-                else if (input.match(/vypni privacy|vypni exif/i)) { document.getElementById('exif-toggle').checked = false; feedback.innerText = '✨ Privacy Shield vypnutý.'; }
-                else if (input.match(/zapni privacy|zapni exif/i)) { document.getElementById('exif-toggle').checked = true; feedback.innerText = '✨ Privacy Shield zapnutý.'; }
-                else if ((match = originalInput.match(wmRegex))) { switchWmTab('text'); document.getElementById('watermark-input').value = match[1]; feedback.innerText = `✨ Textový vodoznak: "${match[1]}"`; }
-                else if (input.match(/zapni logo|logo tab/i)) { switchWmTab('logo'); feedback.innerText = '✨ Prepnuté na LOGO.'; }
-                else if (input.match(/webp|jpg|jpeg|png/i)) { let f = input.match(/webp|jpg|jpeg|png/i)[0]; if(f === 'jpg') f = 'jpeg'; document.getElementById('format-select').value = f; feedback.innerText = `✨ Formát zmenený na ${f.toUpperCase()}.`; } 
-                else if ((match = input.match(/kvalit.*?(\d+)/i)) || (match = input.match(/quality.*?(\d+)/i))) { let val = Math.min(100, Math.max(10, parseInt(match[1]))); document.getElementById('quality-slider').value = val; document.getElementById('quality-val').innerText = val + '%'; feedback.innerText = `✨ Kvalita nastavená na ${val}%.`; }
-                else if (input.match(/magic|enhance|vylep/i)) { document.getElementById('magic-toggle').checked = true; feedback.innerText = '✨ Magic Enhance aktivovaný!'; }
-                else if (input.match(/zmaž|vymaž|clear|clean/i)) { 
-                    document.getElementById('files-list').innerHTML = ''; document.getElementById('results-area').classList.add('hidden'); 
-                    previewItems = []; fileIndexCounter = 1; feedback.innerText = '✨ Plocha vyčistená.'; 
+            const dict = {
+                sk: {
+                    seo_title: "NovaDrop | Rýchla konverzia a optimalizácia", badge_text: "Lokálne spracovanie • Nulové riziko",
+                    h1_part1: "Nová éra optimalizácie.", h1_part2: "Bleskovo a bezpečne.",
+                    subtitle: "Kompresia, zaoblené rohy, odstránenie EXIF, Magic Enhance, SEO premenovanie a vlastné LOGO.",
+                    target_format: "Výstupný formát", quality: "Kvalita kompresie", seo_rename: "SEO Názov",
+                    wm_title: "💧 Watermark Studio", wm_text_tab: "TEXT", wm_logo_tab: "LOGO", wm_upload: "Nahrať vlastné Logo", wm_no_logo: "Žiadne logo nie je nahraté", wm_logo_round: "Zaobliť Logo",
+                    pos_br: "Vpravo dole", pos_bl: "Vľavo dole", pos_tr: "Vpravo hore", pos_tl: "Vľavo hore", pos_c: "Stred",
+                    wm_size: "Veľkosť", wm_opacity: "Krytie",
+                    round_title: "Zaoblené rohy", round_desc: "Zreže hrany do moderného oblúka.",
+                    exif_desc: "Maže GPS a dáta z fotoaparátu.", magic_desc: "Oživí farby a presvetlí tiene.",
+                    drop_title: "Presuňte súbory do zóny", drop_desc: "Spracujte až 300 fotografií hromadne (Odporúčame WebP/PNG)",
+                    results_title: "Spracované súbory", click_preview: "👉 Kliknite na fotku pre kino náhľad", btn_download: "Stiahnuť", btn_download_single: "⬇ Stiahnuť túto fotku", btn_dl_all: "⬇ Stiahnuť všetky", free_limit: "Zadarmo:", btn_pro: "Pro",
+                    donate_title: "Podporte projekt", donate_text1: "Ak vám nástroj ušetril čas, môžete náš vývoj podporiť ľubovoľným darom.", donate_text2: "50% z každého daru venujeme na charitu.", donate_btn: "Darovať a pomôcť", donate_custom: "Alebo zadajte vlastnú sumu (€)"
+                },
+                en: {
+                    seo_title: "NovaDrop | Blazing Fast Image Optimizer", badge_text: "Local processing • Zero data leak risk",
+                    h1_part1: "The new era of optimization.", h1_part2: "Fast and secure.",
+                    subtitle: "Compress, round corners, strip EXIF, apply Magic Enhance, auto-rename and add your custom Logo.",
+                    target_format: "Output Format", quality: "Quality", seo_rename: "SEO Filename",
+                    wm_title: "💧 Watermark Studio", wm_text_tab: "TEXT", wm_logo_tab: "LOGO", wm_upload: "Upload Custom Logo", wm_no_logo: "No logo uploaded", wm_logo_round: "Round Logo",
+                    pos_br: "Bottom Right", pos_bl: "Bottom Left", pos_tr: "Top Right", pos_tl: "Top Left", pos_c: "Center",
+                    wm_size: "Size", wm_opacity: "Opacity",
+                    round_title: "Rounded Corners", round_desc: "Cuts edges into a modern curve.",
+                    exif_desc: "Strips GPS and camera metadata.", magic_desc: "Boosts colors and brightens shadows.",
+                    drop_title: "Drop files into the zone", drop_desc: "Process up to 300 photos in bulk (Use WebP/PNG)",
+                    results_title: "Processed Files", click_preview: "👉 Click image for cinematic preview", btn_download: "Download", btn_download_single: "⬇ Download this photo", btn_dl_all: "⬇ Download All", free_limit: "Free:", btn_pro: "Pro",
+                    donate_title: "Support the project", donate_text1: "If this tool saved your time, consider supporting our development.", donate_text2: "We donate 50% to charity.", donate_btn: "Donate & Help", donate_custom: "Or enter a custom amount (€)"
+                },
+                de: {
+                    seo_title: "NovaDrop | Extrem schnelle Bildoptimierung", badge_text: "Lokale Verarbeitung • Kein Datenleck",
+                    h1_part1: "Die neue Ära der Optimierung.", h1_part2: "Schnell und sicher.",
+                    subtitle: "Komprimieren, abgerundete Ecken, Daten entfernen, SEO-Namen, Farben verbessern und Logo hinzufügen.",
+                    target_format: "Zielformat", quality: "Qualität", seo_rename: "SEO Name",
+                    wm_title: "💧 Watermark Studio", wm_text_tab: "TEXT", wm_logo_tab: "LOGO", wm_upload: "Eigenes Logo hochladen", wm_no_logo: "Kein Logo", wm_logo_round: "Logo abrunden",
+                    pos_br: "Unten Rechts", pos_bl: "Unten Links", pos_tr: "Oben Rechts", pos_tl: "Oben Links", pos_c: "Mitte",
+                    wm_size: "Größe", wm_opacity: "Deckkraft",
+                    round_title: "Abgerundete Ecken", round_desc: "Schneidet Kanten in moderne Kurven.",
+                    exif_desc: "Löscht GPS- und Kameradaten.", magic_desc: "Belebt Farben und hellt Schatten auf.",
+                    drop_title: "Dateien hier ablegen", drop_desc: "Bis zu 300 Fotos gleichzeitig verarbeiten",
+                    results_title: "Verarbeitete Dateien", click_preview: "👉 Klicken Sie für Kino-Vorschau", btn_download: "Laden", btn_download_single: "⬇ Foto laden", btn_dl_all: "⬇ Alle herunterladen", free_limit: "Frei:", btn_pro: "Pro",
+                    donate_title: "Projekt unterstützen", donate_text1: "Wenn Ihnen dieses Tool Zeit gespart hat, unterstützen Sie unsere Entwicklung.", donate_text2: "50% gehen an wohltätige Zwecke.", donate_btn: "Spenden & Helfen", donate_custom: "Oder eigenen Betrag eingeben (€)"
+                },
+                es: {
+                    seo_title: "NovaDrop | Optimizador de imágenes ultrarrápido", badge_text: "Procesamiento local • Cero riesgo de fuga",
+                    h1_part1: "La nueva era de la optimización.", h1_part2: "Rápida y segura.",
+                    subtitle: "Comprime, redondea esquinas, renombra para SEO, elimina EXIF, mejora colores y añade tu propio logo.",
+                    target_format: "Formato", quality: "Calidad", seo_rename: "Nombre SEO",
+                    wm_title: "💧 Watermark Studio", wm_text_tab: "TEXTO", wm_logo_tab: "LOGO", wm_upload: "Subir Logo (PNG/JPG)", wm_no_logo: "Sin logo", wm_logo_round: "Logo redondo",
+                    pos_br: "Abajo Derecha", pos_bl: "Abajo Izquierda", pos_tr: "Arriba Derecha", pos_tl: "Arriba Izquierda", pos_c: "Centro",
+                    wm_size: "Tamaño", wm_opacity: "Opacidad",
+                    round_title: "Esquinas Redondeadas", round_desc: "Corta los bordes en curvas modernas.",
+                    exif_desc: "Elimina los metadatos y GPS.", magic_desc: "Revive los colores y mejora las sombras.",
+                    drop_title: "Suelta los archivos aquí", drop_desc: "Procesa hasta 300 fotos a la vez",
+                    results_title: "Archivos procesados", click_preview: "👉 Haz clic para vista previa", btn_download: "Descargar", btn_download_single: "⬇ Descargar foto", btn_dl_all: "⬇ Descargar todos", free_limit: "Gratis:", btn_pro: "Pro",
+                    donate_title: "Apoya el proyecto", donate_text1: "Si esta herramienta te ahorró tiempo, considera apoyar nuestro desarrollo.", donate_text2: "Donamos el 50% a la caridad.", donate_btn: "Donar y Ayudar", donate_custom: "O ingresa un monto personalizado (€)"
                 }
-                else if(input.match(/angl|english|en/i)) { setLanguage('en', document.querySelectorAll('.lang-btn')[1]); feedback.innerText = '✨ Jazyk: EN.'; }
-                else if(input.match(/špan|spanish|es/i)) { setLanguage('es', document.querySelectorAll('.lang-btn')[3]); feedback.innerText = '✨ Jazyk: ES.'; }
-                else if(input.match(/pro|predplat|premium/i)) { openProModal(); feedback.innerText = '✨ Zobrazujem PRO verziu.'; }
-                else { feedback.innerText = '✨ Tip: "Zapni zaoblené rohy", "Zapni logo" alebo "Kvalita 70".'; }
-                document.getElementById('ai-prompt-box').value = '';
-            }, 400);
-        }
+            };
 
-        /* --- 6. BIZNIS A LIMITY --- */
-        let freeUsed = 0; const FREE_LIMIT = 300; 
-        function openProModal() { document.getElementById('pro-modal').classList.add('modal-active'); }
-        function closeProModal() { document.getElementById('pro-modal').classList.remove('modal-active'); }
-        function updateCounter() {
-            const left = FREE_LIMIT - freeUsed;
-            document.getElementById('limit-counter').innerText = `${left} / ${FREE_LIMIT}`;
-            if(left <= 0) document.getElementById('limit-counter').className = 'text-red-400 font-black tracking-widest text-sm animate-pulse drop-shadow-[0_0_5px_rgba(239,68,68,0.8)]';
-        }
-
-        /* --- 7. APEX TITAN ENGINE --- */
-        const dropZone = document.getElementById('drop-zone');
-        const fileInput = document.getElementById('file-input');
-        const filesList = document.getElementById('files-list');
-        let fileIndexCounter = 1; 
-
-        document.getElementById('quality-slider').addEventListener('input', (e) => { document.getElementById('quality-val').innerText = e.target.value + '%'; });
-
-        ['dragenter', 'dragover'].forEach(e => dropZone.addEventListener(e, prevDef, false));
-        ['dragleave', 'drop'].forEach(e => dropZone.addEventListener(e, prevDef, false));
-        dropZone.addEventListener('dragover', () => dropZone.classList.add('active'));
-        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('active'));
-        dropZone.addEventListener('drop', (e) => { dropZone.classList.remove('active'); handleFiles(e.dataTransfer.files); });
-        
-        fileInput.addEventListener('change', (e) => { handleFiles(e.target.files); e.target.value = ''; });
-
-        function prevDef(e) { e.preventDefault(); e.stopPropagation(); }
-        function formatBytes(b) { if(b===0)return '0 B'; const k=1024, s=['B','KB','MB'], i=Math.floor(Math.log(b)/Math.log(k)); return parseFloat((b/Math.pow(k,i)).toFixed(2))+' '+s[i]; }
-
-        function downloadAll() {
-            const links = document.querySelectorAll('.download-link');
-            if(links.length === 0) return;
-            links.forEach((link, idx) => { setTimeout(() => link.click(), idx * 250); }); 
-        }
-
-        function slugify(text) { return text.toString().toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-'); }
-
-        function createRoundRectPath(ctx, x, y, width, height, radius) {
-            radius = Math.max(0, radius);
-            ctx.beginPath();
-            ctx.moveTo(x + radius, y);
-            ctx.lineTo(x + width - radius, y);
-            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-            ctx.lineTo(x + width, y + height - radius);
-            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-            ctx.lineTo(x + radius, y + height);
-            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-            ctx.lineTo(x, y + radius);
-            ctx.quadraticCurveTo(x, y, x + radius, y);
-            ctx.closePath();
-        }
-
-        function handleFiles(files) {
-            if(files.length === 0) return;
-            let filesToProcess = Array.from(files);
-            const isSingleFile = filesToProcess.length === 1; 
+            window.currentLang = 'sk';
             
-            if(freeUsed + filesToProcess.length > FREE_LIMIT) {
-                const available = FREE_LIMIT - freeUsed;
-                if(available <= 0) { openProModal(); return; }
-                filesToProcess = filesToProcess.slice(0, available);
-                setTimeout(openProModal, 1500); 
+            window.setLanguage = function(lang, btnElement) {
+                window.currentLang = lang; document.documentElement.lang = lang;
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n'); if (dict[lang] && dict[lang][key]) el.innerHTML = dict[lang][key];
+                });
+                document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                    const key = el.getAttribute('data-i18n-placeholder'); if (dict[lang] && dict[lang][key]) el.placeholder = dict[lang][key];
+                });
+                document.title = dict[lang]['seo_title'];
+                if(btnElement) {
+                    document.querySelectorAll('.lang-btn').forEach(b => { b.classList.remove('text-cyan-400'); b.classList.add('text-slate-400'); });
+                    btnElement.classList.remove('text-slate-400'); btnElement.classList.add('text-cyan-400');
+                }
+                document.querySelectorAll('.download-link').forEach(btn => { btn.innerHTML = dict[lang]['btn_download']; });
+                if(document.getElementById('preview-modal').classList.contains('modal-active')) {
+                    document.getElementById('preview-download-btn').innerHTML = `⬇ ${dict[window.currentLang]['btn_download_single']}`;
+                }
+            };
+
+            // Globálne premenné a funkcie
+            window.selectedDonation = 5;
+            window.openDonateModal = function() { document.getElementById('donate-modal').classList.add('modal-active'); };
+            window.closeDonateModal = function() { document.getElementById('donate-modal').classList.remove('modal-active'); };
+            
+            window.selectDonation = function(amount, btn) {
+                window.selectedDonation = amount;
+                document.getElementById('custom-donation').value = '';
+                document.querySelectorAll('.donate-btn').forEach(b => {
+                    b.classList.remove('border-cyan-400', 'bg-cyan-500/20');
+                    b.classList.add('border-white/10', 'bg-black/50');
+                });
+                btn.classList.remove('border-white/10', 'bg-black/50');
+                btn.classList.add('border-cyan-400', 'bg-cyan-500/20');
+            };
+
+            window.clearDonationButtons = function() {
+                window.selectedDonation = document.getElementById('custom-donation').value;
+                document.querySelectorAll('.donate-btn').forEach(b => {
+                    b.classList.remove('border-cyan-400', 'bg-cyan-500/20');
+                    b.classList.add('border-white/10', 'bg-black/50');
+                });
+            };
+
+            window.processDonation = function() {
+                window.location.href = 'https://buy.stripe.com/7sY7sNegjecdgrY4V4gQE01';
+            };
+
+            window.customWatermarkImg = null;
+
+            window.switchWmTab = function(tabType) {
+                document.getElementById('wm-type-val').value = tabType;
+                if(tabType === 'text') {
+                    document.getElementById('btn-wm-text').classList.add('active'); 
+                    document.getElementById('btn-wm-logo').classList.remove('active');
+                    
+                    document.getElementById('wm-text-container').classList.remove('hidden');
+                    document.getElementById('wm-text-container').classList.add('block');
+                    
+                    document.getElementById('wm-logo-container').classList.add('hidden');
+                    document.getElementById('wm-logo-container').classList.remove('flex');
+                } else {
+                    document.getElementById('btn-wm-logo').classList.add('active'); 
+                    document.getElementById('btn-wm-text').classList.remove('active');
+                    
+                    document.getElementById('wm-logo-container').classList.remove('hidden');
+                    document.getElementById('wm-logo-container').classList.add('flex');
+                    
+                    document.getElementById('wm-text-container').classList.add('hidden');
+                    document.getElementById('wm-text-container').classList.remove('block');
+                }
+            };
+
+            // Bezpečné načítanie loga
+            const logoInput = document.getElementById('wm-logo-file');
+            if(logoInput) {
+                logoInput.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => { 
+                            const tempImg = new Image();
+                            tempImg.onload = () => {
+                                window.customWatermarkImg = tempImg; 
+                                document.getElementById('wm-logo-preview-img').src = event.target.result;
+                                document.getElementById('wm-logo-filename').innerHTML = `✅ <span class="text-cyan-400">${file.name}</span>`;
+                                document.getElementById('wm-logo-preview-box').classList.remove('hidden');
+                                document.getElementById('wm-logo-preview-box').classList.add('flex');
+                            };
+                            tempImg.src = event.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                    e.target.value = ''; 
+                });
             }
 
-            document.getElementById('results-area').classList.remove('hidden');
-            
-            const wmType = document.getElementById('wm-type-val').value;
-            const wmText = document.getElementById('watermark-text').value;
-            const wmSizePerc = parseInt(document.getElementById('wm-size').value);
-            const wmOpacity = parseInt(document.getElementById('wm-opacity').value) / 100;
-            const wmPos = document.getElementById('wm-position').value;
-            
-            const applyMagic = document.getElementById('magic-toggle') ? document.getElementById('magic-toggle').checked : false;
-            const applyRounded = document.getElementById('rounded-toggle') ? document.getElementById('rounded-toggle').checked : false;
-            const privacyActive = document.getElementById('exif-toggle') ? document.getElementById('exif-toggle').checked : false;
-            const applyLogoRounded = document.getElementById('logo-round-toggle') ? document.getElementById('logo-round-toggle').checked : false;
-            
-            const seoBaseNameRaw = document.getElementById('seo-rename') ? document.getElementById('seo-rename').value : '';
-            const seoBaseName = seoBaseNameRaw ? slugify(seoBaseNameRaw) : null;
-            const format = document.getElementById('format-select').value;
-            
-            filesToProcess.forEach((file) => {
-                if (!file.type.startsWith('image/')) return;
-                freeUsed++; updateCounter();
+            document.getElementById('wm-size').addEventListener('input', (e) => document.getElementById('wm-size-val').innerText = e.target.value + '%');
+            document.getElementById('wm-opacity').addEventListener('input', (e) => document.getElementById('wm-opacity-val').innerText = e.target.value + '%');
 
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = img.width; canvas.height = img.height;
-                        const ctx = canvas.getContext('2d');
-                        
-                        if (format === 'jpeg') {
-                            ctx.fillStyle = '#ffffff';
-                            ctx.fillRect(0, 0, canvas.width, canvas.height);
-                        }
-                        
-                        ctx.save();
-                        
-                        if (applyRounded) {
-                            const radius = Math.min(Math.min(img.width, img.height) / 2, Math.max(20, Math.min(img.width, img.height) * 0.05));
-                            createRoundRectPath(ctx, 0, 0, img.width, img.height, radius);
-                            ctx.clip(); 
-                        }
+            window.previewItems = [];
+            window.currentPreviewIndex = 0;
 
-                        if (applyMagic) { ctx.filter = 'saturate(1.25) contrast(1.15) brightness(1.05)'; }
-                        
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        ctx.filter = 'none';
+            window.updatePreviewUI = function() {
+                if (window.previewItems.length === 0) return;
+                const item = window.previewItems[window.currentPreviewIndex];
+                
+                document.getElementById('main-img').src = item.url;
+                document.getElementById('preview-filename').innerText = item.filename;
+                const dlBtn = document.getElementById('preview-download-btn');
+                dlBtn.href = item.url; dlBtn.download = item.filename;
+                dlBtn.innerHTML = `⬇ ${dict[window.currentLang]['btn_download_single']}`;
+                
+                const prevImg = document.getElementById('prev-img');
+                if (window.currentPreviewIndex > 0) {
+                    prevImg.src = window.previewItems[window.currentPreviewIndex - 1].url;
+                    prevImg.classList.remove('hidden');
+                } else { prevImg.classList.add('hidden'); }
+                
+                const nextImg = document.getElementById('next-img');
+                if (window.currentPreviewIndex < window.previewItems.length - 1) {
+                    nextImg.src = window.previewItems[window.currentPreviewIndex + 1].url;
+                    nextImg.classList.remove('hidden');
+                } else { nextImg.classList.add('hidden'); }
+            };
 
-                        ctx.globalAlpha = wmOpacity;
-                        const pad = Math.max(10, img.width * 0.02);
+            window.prevImage = function(e) { if(e) e.stopPropagation(); if (window.currentPreviewIndex > 0) { window.currentPreviewIndex--; window.updatePreviewUI(); } };
+            window.nextImage = function(e) { if(e) e.stopPropagation(); if (window.currentPreviewIndex < window.previewItems.length - 1) { window.currentPreviewIndex++; window.updatePreviewUI(); } };
 
-                        if (wmType === 'text' && wmText.trim() !== '') {
-                            const fontSize = Math.max(12, Math.floor(img.width * (wmSizePerc / 100))); 
-                            ctx.font = `900 ${fontSize}px sans-serif`; ctx.fillStyle = 'white'; 
-                            ctx.shadowColor = 'rgba(0, 0, 0, 0.9)'; ctx.shadowBlur = Math.max(4, fontSize / 4);
-                            ctx.textBaseline = (wmPos === 'tr' || wmPos === 'tl') ? 'top' : (wmPos === 'c' ? 'middle' : 'bottom');
-                            ctx.textAlign = (wmPos === 'tl' || wmPos === 'bl') ? 'left' : (wmPos === 'c' ? 'center' : 'right');
+            window.openPreview = function(index) {
+                window.currentPreviewIndex = index; window.updatePreviewUI();
+                document.getElementById('preview-modal').classList.add('modal-active');
+                document.addEventListener('keydown', window.handleKey);
+            };
+
+            window.closePreview = function() { 
+                document.getElementById('preview-modal').classList.remove('modal-active'); 
+                document.removeEventListener('keydown', window.handleKey);
+            };
+
+            window.handleKey = function(e) {
+                if (e.key === 'ArrowLeft') window.prevImage();
+                if (e.key === 'ArrowRight') window.nextImage();
+                if (e.key === 'Escape') window.closePreview();
+            };
+
+            window.processAI = function() {
+                const inputBox = document.getElementById('ai-prompt-box');
+                if(!inputBox) return;
+                const input = inputBox.value.toLowerCase();
+                const originalInput = inputBox.value;
+                const feedback = document.getElementById('ai-feedback');
+                if(!input) return;
+                
+                feedback.classList.remove('hidden'); feedback.innerText = '⚙️ Nova AI spracováva...';
+                setTimeout(() => {
+                    let match;
+                    const wmRegex = /(?:vodoznak|watermark|marca de agua)\s*(?:je\s*)?['"]([^'"]+)['"]/i;
+                    
+                    if (input.match(/zaob|round|curv|roh/i)) { document.getElementById('rounded-toggle').checked = !document.getElementById('rounded-toggle').checked; feedback.innerText = '✨ Prepínam zaoblené rohy pre fotku.'; }
+                    else if (input.match(/vypni privacy|vypni exif/i)) { document.getElementById('exif-toggle').checked = false; feedback.innerText = '✨ Privacy Shield vypnutý.'; }
+                    else if (input.match(/zapni privacy|zapni exif/i)) { document.getElementById('exif-toggle').checked = true; feedback.innerText = '✨ Privacy Shield zapnutý.'; }
+                    else if ((match = originalInput.match(wmRegex))) { window.switchWmTab('text'); document.getElementById('watermark-text').value = match[1]; feedback.innerText = `✨ Textový vodoznak: "${match[1]}"`; }
+                    else if (input.match(/zapni logo|logo tab/i)) { window.switchWmTab('logo'); feedback.innerText = '✨ Prepnuté na LOGO.'; }
+                    else if (input.match(/webp|jpg|jpeg|png/i)) { let f = input.match(/webp|jpg|jpeg|png/i)[0]; if(f === 'jpg') f = 'jpeg'; document.getElementById('format-select').value = f; feedback.innerText = `✨ Formát zmenený na ${f.toUpperCase()}.`; } 
+                    else if ((match = input.match(/kvalit.*?(\d+)/i)) || (match = input.match(/quality.*?(\d+)/i))) { let val = Math.min(100, Math.max(10, parseInt(match[1]))); document.getElementById('quality-slider').value = val; document.getElementById('quality-val').innerText = val + '%'; feedback.innerText = `✨ Kvalita nastavená na ${val}%.`; }
+                    else if (input.match(/magic|enhance|vylep/i)) { document.getElementById('magic-toggle').checked = true; feedback.innerText = '✨ Magic Enhance aktivovaný!'; }
+                    else if (input.match(/zmaž|vymaž|clear|clean/i)) { 
+                        document.getElementById('files-list').innerHTML = ''; document.getElementById('results-area').classList.add('hidden'); 
+                        window.previewItems = []; window.fileIndexCounter = 1; feedback.innerText = '✨ Plocha vyčistená.'; 
+                    }
+                    else if(input.match(/angl|english|en/i)) { window.setLanguage('en', document.querySelectorAll('.lang-btn')[1]); feedback.innerText = '✨ Jazyk: EN.'; }
+                    else if(input.match(/špan|spanish|es/i)) { window.setLanguage('es', document.querySelectorAll('.lang-btn')[3]); feedback.innerText = '✨ Jazyk: ES.'; }
+                    else if(input.match(/pro|predplat|premium/i)) { window.openProModal(); feedback.innerText = '✨ Zobrazujem PRO verziu.'; }
+                    else { feedback.innerText = '✨ Tip: "Zapni zaoblené rohy", "Zapni logo" alebo "Kvalita 70".'; }
+                    inputBox.value = '';
+                }, 400);
+            };
+
+            window.freeUsed = 0; 
+            window.FREE_LIMIT = 300; 
+            window.openProModal = function() { document.getElementById('pro-modal').classList.add('modal-active'); };
+            window.closeProModal = function() { document.getElementById('pro-modal').classList.remove('modal-active'); };
+            window.updateCounter = function() {
+                const left = window.FREE_LIMIT - window.freeUsed;
+                document.getElementById('limit-counter').innerText = `${left} / ${window.FREE_LIMIT}`;
+                if(left <= 0) document.getElementById('limit-counter').className = 'text-red-400 font-black tracking-widest text-sm animate-pulse drop-shadow-[0_0_5px_rgba(239,68,68,0.8)]';
+            };
+
+            const dropZone = document.getElementById('drop-zone');
+            const fileInput = document.getElementById('file-input');
+            const filesList = document.getElementById('files-list');
+            window.fileIndexCounter = 1; 
+
+            document.getElementById('quality-slider').addEventListener('input', (e) => { document.getElementById('quality-val').innerText = e.target.value + '%'; });
+
+            ['dragenter', 'dragover'].forEach(e => dropZone.addEventListener(e, prevDef, false));
+            ['dragleave', 'drop'].forEach(e => dropZone.addEventListener(e, prevDef, false));
+            dropZone.addEventListener('dragover', () => dropZone.classList.add('active'));
+            dropZone.addEventListener('dragleave', () => dropZone.classList.remove('active'));
+            dropZone.addEventListener('drop', (e) => { dropZone.classList.remove('active'); window.handleFiles(e.dataTransfer.files); });
+            
+            if(fileInput) {
+                fileInput.addEventListener('change', (e) => { window.handleFiles(e.target.files); e.target.value = ''; });
+            }
+
+            function prevDef(e) { e.preventDefault(); e.stopPropagation(); }
+            
+            window.formatBytes = function(b) { if(b===0)return '0 B'; const k=1024, s=['B','KB','MB'], i=Math.floor(Math.log(b)/Math.log(k)); return parseFloat((b/Math.pow(k,i)).toFixed(2))+' '+s[i]; };
+
+            window.downloadAll = function() {
+                const links = document.querySelectorAll('.download-link');
+                if(links.length === 0) return;
+                links.forEach((link, idx) => { setTimeout(() => link.click(), idx * 250); }); 
+            };
+
+            window.slugify = function(text) { return text.toString().toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-'); };
+
+            window.createRoundRectPath = function(ctx, x, y, width, height, radius) {
+                radius = Math.max(0, radius);
+                ctx.beginPath();
+                ctx.moveTo(x + radius, y);
+                ctx.lineTo(x + width - radius, y);
+                ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+                ctx.lineTo(x + width, y + height - radius);
+                ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+                ctx.lineTo(x + radius, y + height);
+                ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+                ctx.lineTo(x, y + radius);
+                ctx.quadraticCurveTo(x, y, x + radius, y);
+                ctx.closePath();
+            };
+
+            window.handleFiles = function(files) {
+                if(!files || files.length === 0) return;
+                let filesToProcess = Array.from(files);
+                const isSingleFile = filesToProcess.length === 1; 
+                
+                if(window.freeUsed + filesToProcess.length > window.FREE_LIMIT) {
+                    const available = window.FREE_LIMIT - window.freeUsed;
+                    if(available <= 0) { window.openProModal(); return; }
+                    filesToProcess = filesToProcess.slice(0, available);
+                    setTimeout(window.openProModal, 1500); 
+                }
+
+                document.getElementById('results-area').classList.remove('hidden');
+                
+                const wmType = document.getElementById('wm-type-val').value;
+                const wmText = document.getElementById('watermark-text').value;
+                const wmSizePerc = parseInt(document.getElementById('wm-size').value);
+                const wmOpacity = parseInt(document.getElementById('wm-opacity').value) / 100;
+                const wmPos = document.getElementById('wm-position').value;
+                
+                const magicElem = document.getElementById('magic-toggle');
+                const roundedElem = document.getElementById('rounded-toggle');
+                const exifElem = document.getElementById('exif-toggle');
+                const logoRoundedElem = document.getElementById('logo-round-toggle');
+                
+                const applyMagic = magicElem ? magicElem.checked : false;
+                const applyRounded = roundedElem ? roundedElem.checked : false;
+                const privacyActive = exifElem ? exifElem.checked : false;
+                const applyLogoRounded = logoRoundedElem ? logoRoundedElem.checked : false;
+                
+                const seoElem = document.getElementById('seo-rename');
+                const seoBaseNameRaw = seoElem ? seoElem.value : '';
+                const seoBaseName = seoBaseNameRaw ? window.slugify(seoBaseNameRaw) : null;
+                const format = document.getElementById('format-select').value;
+                
+                filesToProcess.forEach((file) => {
+                    if (!file.type.startsWith('image/')) return;
+                    window.freeUsed++; window.updateCounter();
+
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = img.width; canvas.height = img.height;
+                            const ctx = canvas.getContext('2d');
                             
-                            let x, y;
-                            if (wmPos === 'br') { x = img.width - pad; y = img.height - pad; }
-                            else if (wmPos === 'bl') { x = pad; y = img.height - pad; }
-                            else if (wmPos === 'tr') { x = img.width - pad; y = pad; }
-                            else if (wmPos === 'tl') { x = pad; y = pad; }
-                            else if (wmPos === 'c') { x = img.width / 2; y = img.height / 2; }
-                            
-                            ctx.fillText(wmText, x, y);
-                        } 
-                        else if (wmType === 'logo' && customWatermarkImg && customWatermarkImg.complete && customWatermarkImg.naturalWidth > 0) {
-                            const w = img.width * (wmSizePerc / 100);
-                            const h = customWatermarkImg.naturalHeight * (w / customWatermarkImg.naturalWidth);
-                            let x, y;
-                            if (wmPos === 'br') { x = img.width - w - pad; y = img.height - h - pad; }
-                            else if (wmPos === 'bl') { x = pad; y = img.height - h - pad; }
-                            else if (wmPos === 'tr') { x = img.width - w - pad; y = pad; }
-                            else if (wmPos === 'tl') { x = pad; y = pad; }
-                            else if (wmPos === 'c') { x = (img.width - w)/2; y = (img.height - h)/2; }
-                            
-                            ctx.save(); 
-                            if (applyLogoRounded) {
-                                const logoRadius = Math.min(w, h) * 0.15; 
-                                createRoundRectPath(ctx, x, y, w, h, logoRadius);
-                                ctx.clip();
+                            // Ak je to JPEG, dáme biele pozadie kvôli absencii priehľadnosti
+                            if (format === 'jpeg') {
+                                ctx.fillStyle = '#ffffff';
+                                ctx.fillRect(0, 0, canvas.width, canvas.height);
                             }
-                            ctx.shadowColor = 'rgba(0, 0, 0, 0.6)'; ctx.shadowBlur = 15;
-                            ctx.drawImage(customWatermarkImg, x, y, w, h);
+                            
+                            ctx.save();
+                            
+                            // ZAOBLENIE OBRAZU - Ak to používateľ vyžaduje
+                            if (applyRounded) {
+                                const radius = Math.min(Math.min(img.width, img.height) / 2, Math.max(20, Math.min(img.width, img.height) * 0.05));
+                                window.createRoundRectPath(ctx, 0, 0, img.width, img.height, radius);
+                                ctx.clip(); 
+                            }
+
+                            if (applyMagic) { ctx.filter = 'saturate(1.25) contrast(1.15) brightness(1.05)'; }
+                            
+                            // VYKRESLENIE
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                            ctx.filter = 'none';
+
+                            ctx.globalAlpha = wmOpacity;
+                            const pad = Math.max(10, img.width * 0.02);
+
+                            // VODOZNAK: TEXT
+                            if (wmType === 'text' && wmText.trim() !== '') {
+                                const fontSize = Math.max(12, Math.floor(img.width * (wmSizePerc / 100))); 
+                                ctx.font = `900 ${fontSize}px sans-serif`; ctx.fillStyle = 'white'; 
+                                ctx.shadowColor = 'rgba(0, 0, 0, 0.9)'; ctx.shadowBlur = Math.max(4, fontSize / 4);
+                                ctx.textBaseline = (wmPos === 'tr' || wmPos === 'tl') ? 'top' : (wmPos === 'c' ? 'middle' : 'bottom');
+                                ctx.textAlign = (wmPos === 'tl' || wmPos === 'bl') ? 'left' : (wmPos === 'c' ? 'center' : 'right');
+                                
+                                let x, y;
+                                if (wmPos === 'br') { x = img.width - pad; y = img.height - pad; }
+                                else if (wmPos === 'bl') { x = pad; y = img.height - pad; }
+                                else if (wmPos === 'tr') { x = img.width - pad; y = pad; }
+                                else if (wmPos === 'tl') { x = pad; y = pad; }
+                                else if (wmPos === 'c') { x = img.width / 2; y = img.height / 2; }
+                                
+                                ctx.fillText(wmText, x, y);
+                            } 
+                            // VODOZNAK: LOGO
+                            else if (wmType === 'logo' && window.customWatermarkImg && window.customWatermarkImg.complete && window.customWatermarkImg.naturalWidth > 0) {
+                                const w = img.width * (wmSizePerc / 100);
+                                const h = window.customWatermarkImg.naturalHeight * (w / window.customWatermarkImg.naturalWidth);
+                                let x, y;
+                                if (wmPos === 'br') { x = img.width - w - pad; y = img.height - h - pad; }
+                                else if (wmPos === 'bl') { x = pad; y = img.height - h - pad; }
+                                else if (wmPos === 'tr') { x = img.width - w - pad; y = pad; }
+                                else if (wmPos === 'tl') { x = pad; y = pad; }
+                                else if (wmPos === 'c') { x = (img.width - w)/2; y = (img.height - h)/2; }
+                                
+                                ctx.save(); 
+                                if (applyLogoRounded) {
+                                    // Matematicky presné a nerozbité vykreslenie oblého loga s tieňom
+                                    const logoRadius = Math.min(w, h) * 0.15; 
+                                    
+                                    // 1. Nakreslíme neviditeľný tvar iba kvôli dokonalému tieňu
+                                    ctx.shadowColor = 'rgba(0, 0, 0, 0.6)'; ctx.shadowBlur = 15;
+                                    ctx.fillStyle = 'rgba(0,0,0,1)';
+                                    window.createRoundRectPath(ctx, x, y, w, h, logoRadius);
+                                    ctx.fill();
+                                    
+                                    // 2. Vypneme tieň a orežeme pracovnú plochu na zaoblenú
+                                    ctx.shadowColor = 'transparent';
+                                    ctx.clip();
+                                } else {
+                                    ctx.shadowColor = 'rgba(0, 0, 0, 0.6)'; ctx.shadowBlur = 15;
+                                }
+                                // Vykreslíme samotné logo
+                                ctx.drawImage(window.customWatermarkImg, x, y, w, h);
+                                ctx.restore(); 
+                            }
+                            
                             ctx.restore(); 
-                        }
-                        
-                        ctx.restore(); 
-                        ctx.globalAlpha = 1.0; ctx.shadowBlur = 0;
+                            ctx.globalAlpha = 1.0; ctx.shadowBlur = 0;
 
-                        const quality = document.getElementById('quality-slider').value / 100;
-                        
-                        canvas.toBlob((blob) => {
-                            if(!blob) return;
-                            const url = URL.createObjectURL(blob);
+                            const quality = document.getElementById('quality-slider').value / 100;
                             
-                            let finalFilename = '';
-                            if (seoBaseName) { finalFilename = `${seoBaseName}-${fileIndexCounter}.${format}`; fileIndexCounter++; } 
-                            else {
-                                const magicTag = applyMagic ? '_magic' : '';
-                                const hasWM = (wmType==='text' && wmText.trim()!=='') || (wmType==='logo' && customWatermarkImg);
-                                finalFilename = file.name.split('.')[0] + magicTag + (hasWM ? '_wm.' : '_nova.') + format;
-                            }
-                            
-                            const saving = Math.round((1 - (blob.size / file.size)) * 100);
-                            
-                            previewItems.push({ url: url, filename: finalFilename });
-                            const thisIndex = previewItems.length - 1;
+                            canvas.toBlob((blob) => {
+                                if(!blob) return;
+                                const url = URL.createObjectURL(blob);
+                                
+                                let finalFilename = '';
+                                if (seoBaseName) { finalFilename = `${seoBaseName}-${window.fileIndexCounter}.${format}`; window.fileIndexCounter++; } 
+                                else {
+                                    const magicTag = applyMagic ? '_magic' : '';
+                                    const hasWM = (wmType==='text' && wmText.trim()!=='') || (wmType==='logo' && window.customWatermarkImg);
+                                    finalFilename = file.name.split('.')[0] + magicTag + (hasWM ? '_wm.' : '_nova.') + format;
+                                }
+                                
+                                const saving = Math.round((1 - (blob.size / file.size)) * 100);
+                                
+                                window.previewItems.push({ url: url, filename: finalFilename });
+                                const thisIndex = window.previewItems.length - 1;
 
-                            const tags = [];
-                            if ((wmType==='text' && wmText.trim()!=='') || (wmType==='logo' && customWatermarkImg)) tags.push('<span class="bg-cyan-500 text-black text-[9px] font-black px-2 py-0.5 rounded-sm shadow-lg mx-1 mt-1">WM</span>');
-                            if (applyMagic) tags.push('<span class="bg-fuchsia-500 text-white text-[9px] font-black px-2 py-0.5 rounded-sm shadow-lg mx-1 mt-1">✨ MAGIC</span>');
-                            if (applyRounded) tags.push('<span class="bg-blue-500 text-white text-[9px] font-black px-2 py-0.5 rounded-sm shadow-lg mx-1 mt-1">🔲 ROUND</span>');
-                            if (privacyActive) tags.push('<span class="bg-emerald-500 text-black text-[9px] font-black px-2 py-0.5 rounded-sm shadow-lg mx-1 mt-1">🛡️ SECURE</span>');
-                            if (seoBaseName) tags.push('<span class="bg-amber-500 text-black text-[9px] font-black px-2 py-0.5 rounded-sm shadow-lg mx-1 mt-1">🔍 SEO</span>');
+                                const tags = [];
+                                if ((wmType==='text' && wmText.trim()!=='') || (wmType==='logo' && window.customWatermarkImg)) tags.push('<span class="bg-cyan-500 text-black text-[9px] font-black px-2 py-0.5 rounded-sm shadow-lg mx-1 mt-1">WM</span>');
+                                if (applyMagic) tags.push('<span class="bg-fuchsia-500 text-white text-[9px] font-black px-2 py-0.5 rounded-sm shadow-lg mx-1 mt-1">✨ MAGIC</span>');
+                                if (applyRounded) tags.push('<span class="bg-blue-500 text-white text-[9px] font-black px-2 py-0.5 rounded-sm shadow-lg mx-1 mt-1">🔲 ROUND</span>');
+                                if (privacyActive) tags.push('<span class="bg-emerald-500 text-black text-[9px] font-black px-2 py-0.5 rounded-sm shadow-lg mx-1 mt-1">🛡️ SECURE</span>');
+                                if (seoBaseName) tags.push('<span class="bg-amber-500 text-black text-[9px] font-black px-2 py-0.5 rounded-sm shadow-lg mx-1 mt-1">🔍 SEO</span>');
 
-                            const item = document.createElement('div');
-                            item.className = "bg-black/40 border border-white/10 rounded-2xl p-5 flex items-center justify-between hover:bg-black/60 transition-all duration-300 shadow-lg";
-                            
-                            item.innerHTML = `
-                                <div class="flex items-center space-x-5 w-full">
-                                    <div class="relative shrink-0 cursor-pointer group/thumb" onclick="openPreview(${thisIndex})">
-                                        <img src="${url}" class="w-16 h-16 object-cover border border-white/20 shadow-lg group-hover/thumb:opacity-40 transition duration-300 ${applyRounded && format !== 'jpeg' ? 'rounded-[1.25rem]' : ''}">
-                                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover/thumb:opacity-100 transition duration-300">
-                                            <span class="text-3xl drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">👁️</span>
+                                const item = document.createElement('div');
+                                item.className = "bg-black/40 border border-white/10 rounded-2xl p-5 flex items-center justify-between hover:bg-black/60 transition-all duration-300 shadow-lg";
+                                
+                                // Úmyselne sme ostránili akékoľvek maskujúce CSS triedy ("rounded...") z <img src="${url}">!
+                                // Teraz ti prehliadač ukáže bez skrášľovania holú realitu toho, ako fotka vyzerá - ostrá alebo oblá.
+                                item.innerHTML = `
+                                    <div class="flex items-center space-x-5 w-full">
+                                        <div class="relative shrink-0 cursor-pointer group/thumb" onclick="window.openPreview(${thisIndex})">
+                                            <img src="${url}" class="w-16 h-16 object-cover border border-white/20 shadow-lg group-hover/thumb:opacity-40 transition duration-300">
+                                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover/thumb:opacity-100 transition duration-300">
+                                                <span class="text-3xl drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">👁️</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow overflow-hidden">
+                                            <p class="text-base font-black text-white truncate tracking-wide mb-1 cursor-pointer hover:text-cyan-400 transition" onclick="window.openPreview(${thisIndex})">${finalFilename}</p>
+                                            <div class="flex flex-wrap items-center mb-1.5">${tags.join('')}</div>
+                                            <div class="text-[11px] text-slate-400 font-bold flex items-center">
+                                                <span class="line-through opacity-50">${window.formatBytes(file.size)}</span> <span class="mx-2 text-slate-600">➔</span> <span class="text-cyan-400 font-black text-sm">${window.formatBytes(blob.size)}</span> 
+                                                <span class="ml-3 bg-cyan-500/10 text-cyan-400 px-2 py-0.5 rounded-lg border border-cyan-500/30 font-black tracking-wider">-${saving > 0 ? saving : 0}%</span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="flex-grow overflow-hidden">
-                                        <p class="text-base font-black text-white truncate tracking-wide mb-1 cursor-pointer hover:text-cyan-400 transition" onclick="openPreview(${thisIndex})">${finalFilename}</p>
-                                        <div class="flex flex-wrap items-center mb-1.5">${tags.join('')}</div>
-                                        <div class="text-[11px] text-slate-400 font-bold flex items-center">
-                                            <span class="line-through opacity-50">${formatBytes(file.size)}</span> <span class="mx-2 text-slate-600">➔</span> <span class="text-cyan-400 font-black text-sm">${formatBytes(blob.size)}</span> 
-                                            <span class="ml-3 bg-cyan-500/10 text-cyan-400 px-2 py-0.5 rounded-lg border border-cyan-500/30 font-black tracking-wider">-${saving > 0 ? saving : 0}%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="${url}" download="${finalFilename}" class="download-link bg-white/10 hover:bg-cyan-500 text-cyan-300 hover:text-black font-black px-6 py-3 rounded-xl transition-all text-xs border border-white/10 hover:border-transparent flex-shrink-0 uppercase tracking-widest shadow-lg hover:shadow-[0_0_20px_rgba(6,182,212,0.6)] ml-4" data-i18n="btn_download">${dict[currentLang]['btn_download']}</a>
-                            `;
-                            filesList.prepend(item);
+                                    <a href="${url}" download="${finalFilename}" class="download-link bg-white/10 hover:bg-cyan-500 text-cyan-300 hover:text-black font-black px-6 py-3 rounded-xl transition-all text-xs border border-white/10 hover:border-transparent flex-shrink-0 uppercase tracking-widest shadow-lg hover:shadow-[0_0_20px_rgba(6,182,212,0.6)] ml-4" data-i18n="btn_download">${dict[window.currentLang]['btn_download']}</a>
+                                `;
+                                filesList.prepend(item);
 
-                            if (isSingleFile) { setTimeout(() => openPreview(thisIndex), 100); }
+                                if (isSingleFile) { setTimeout(() => window.openPreview(thisIndex), 100); }
 
-                        }, `image/${format}`, quality);
+                            }, `image/${format}`, quality);
+                        };
+                        img.src = e.target.result;
                     };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
-        }
+                    reader.readAsDataURL(file);
+                });
+            };
+
+        });
     </script>
 </body>
 </html>
