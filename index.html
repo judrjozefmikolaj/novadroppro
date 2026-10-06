@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="sk" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title data-i18n="seo_title">NovaDrop | Rýchla konverzia a ochrana fotiek</title>
+    <meta name="description" content="Bezplatný offline nástroj. Hromadná konverzia, odstránenie EXIF/GPS dát a hromadný vodoznak priamo v prehliadači.">
+    
+    <!-- Programmatic SEO & Hreflang (SK, EN, DE, ES) -->
+    <link rel="alternate" hreflang="sk" href="https://novadrop.io/sk" />
+    <link rel="alternate" hreflang="en" href="https://novadrop.io/en" />
+    <link rel="alternate" hreflang="es" href="https://novadrop.io/es" />
+    <link rel="alternate" hreflang="de" href="https://novadrop.io/de" />
+    <link rel="alternate" hreflang="x-default" href="https://novadrop.io/en" />
+
+    <!-- Schema.org SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "NovaDrop PRO",
+      "url": "https://novadrop.io",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "2.99", "priceCurrency": "EUR" }
+    }
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* NOVA UI V3.5 - Ultra Premium Glass */
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.005) 100%);
+            backdrop-filter: blur(36px);
+            -webkit-backdrop-filter: blur(36px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 24px 48px rgba(0, 0, 0, 0.6);
+        }
+        
+        /* Animácia zväčšenej Ikony (Návykový efekt) */
+        @keyframes majesticFloat {
+            0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 0 20px rgba(6,182,212,0.4); }
+            50% { transform: translateY(-6px) scale(1.05); box-shadow: 0 0 40px rgba(6,182,212,0.8), inset 0 0 15px rgba(255,255,255,0.5); }
+        }
+        .animate-majestic {
+            animation: majesticFloat 4s ease-in-out infinite;
+        }
+
+        /* Dropzone animácie */
+        .drop-zone { border: 2px dashed rgba(255, 255, 255, 0.15); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .drop-zone.active { 
+            border-color: #06b6d4; 
+            background: rgba(6, 182, 212, 0.08); 
+            box-shadow: 0 0 60px rgba(6, 182, 212, 0.25) inset;
+            transform: scale(1.03);
+        }
+
+        /* Gradienty */
+        .nova-gradient { background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .pro-gradient { background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #ea580c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Custom Slider (Apple style) */
+        input[type=range] { -webkit-appearance: none; background: rgba(255,255,255,0.08); border-radius: 8px; height: 6px; border: 1px solid rgba(255,255,255,0.1); outline: none; }
+        input[type=range]::-webkit-slider-thumb { 
+            -webkit-appearance: none; height: 22px; width: 22px; border-radius: 50%; 
+            background: #06b6d4; cursor: pointer; box-shadow: 0 0 20px rgba(6, 182, 212, 0.6); 
+            border: 2px solid #fff; transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.25); }
+        
+        /* Modals & Scrollbars */
+        .modal-active { display: flex !important; animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+        
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
+        
+        /* Toggle Switch (Vždy zapnutý pre Privacy) */
+        .toggle-checkbox:checked { right: 0; border-color: #06b6d4; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #06b6d4; box-shadow: 0 0 10px rgba(6,182,212,0.5); }
+    </style>
+</head>
+<body class="bg-[#020617] text-slate-200 font-sans antialiased min-h-screen relative overflow-x-hidden selection:bg-cyan-500 selection:text-white">
+
+    <!-- Dynamické ambientné podsvietenie -->
+    <div id="glow-1" class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-cyan-600/15 rounded-full blur-[120px] pointer-events-none transition-colors duration-1000"></div>
+    <div id="glow-2" class="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-violet-600/15 rounded-full blur-[120px] pointer-events-none transition-colors duration-1000"></div>
+
+    <!-- PLÁVAJÚCI AI ASISTENT V3.5 -->
+    <div class="fixed bottom-6 right-6 z-50 glass-panel p-5 rounded-3xl w-80 sm:w-96 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-cyan-500/30 transition-transform duration-300 hover:scale-[1.02]">
+        <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
+            <div class="flex items-center space-x-2">
+                <div class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_12px_#06b6d4]"></div>
+                <span class="text-[11px] font-black uppercase tracking-widest text-cyan-400">Nova AI Core</span>
+            </div>
+        </div>
+        <textarea id="ai-prompt-box" rows="2" placeholder="Napr.: Pridaj vodoznak 'Môj E-shop', zmeň kvalitu na 90, prepni do španielčiny..." class="w-full bg-black/40 border border-white/10 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-400 transition resize-none custom-scroll placeholder-slate-500"></textarea>
+        <button onclick="processAI()" class="mt-3 w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-black text-xs py-3.5 px-4 rounded-xl shadow-lg shadow-cyan-500/20 transition-all flex items-center justify-center space-x-2">
+            <span>✨ Aktivovať AI</span>
+        </button>
+        <div id="ai-feedback" class="mt-3 text-[11px] text-cyan-300 font-bold hidden bg-cyan-500/10 p-2 rounded-lg border border-cyan-500/20"></div>
+    </div>
+
+    <!-- PRO VERZIA MODAL (Ultimátna konverzia) -->
+    <div id="pro-modal" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-lg p-10 rounded-[2rem] relative border-amber-500/40 shadow-[0_0_120px_rgba(245,158,11,0.2)]">
+            <button onclick="closeProModal()" class="absolute top-6 right-6 text-slate-500 hover:text-white transition text-2xl font-light">✕</button>
+            
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center bg-red-500/10 border border-red-500/50 text-red-400 text-[10px] font-black px-4 py-1.5 rounded-full mb-6 tracking-widest uppercase animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.3)]">
+                    Limit dosiahnutý • Akcia -66%
+                </div>
+                <h2 class="text-4xl font-black text-white mb-2 tracking-tight">NovaDrop <span class="pro-gradient">PRO</span></h2>
+                <p class="text-sm text-slate-400">Vaša práca si zaslúži nulové limity. Odomknite silu profesionálov.</p>
+            </div>
+            
+            <div class="bg-black/40 rounded-2xl p-6 mb-8 border border-white/10">
+                <ul class="space-y-4 text-sm text-slate-200 font-bold">
+                    <li class="flex items-center"><div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm mr-3 border border-emerald-500/30">✓</div> Neobmedzený počet súborov (Bulk)</li>
+                    <li class="flex items-center"><div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm mr-3 border border-emerald-500/30">✓</div> Export všetkého do 1 ZIP archívu</li>
+                    <li class="flex items-center"><div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm mr-3 border border-emerald-500/30">✓</div> Úplne bez Google reklám</li>
+                    <li class="flex items-center"><div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm mr-3 border border-emerald-500/30">✓</div> VIP podpora a nové AI funkcie</li>
+                </ul>
+            </div>
+
+            <div class="flex items-end justify-center space-x-3 mb-8">
+                <span class="text-2xl text-slate-500 line-through font-bold">8.99 €</span>
+                <span class="text-6xl font-black text-amber-400 drop-shadow-lg">2.99 €</span>
+                <span class="text-sm text-slate-400 mb-2 font-bold">/ mesiac</span>
+            </div>
+
+            <button onclick="alert('Stripe Checkout Inicializovaný.')" class="w-full bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 hover:from-amber-300 hover:to-orange-400 text-black font-black py-4 rounded-xl shadow-xl shadow-amber-500/20 transition-all text-xl tracking-wide">
+                Získať PRO prístup
+            </button>
+            <p class="text-center text-[11px] text-slate-500 mt-5 uppercase tracking-wider font-semibold">Bezpečné platby • Stripe • Kedykoľvek zrušiteľné</p>
+        </div>
+    </div>
+
+    <!-- HLAVIČKA -->
+    <header class="fixed top-0 left-0 right-0 z-40 glass-panel border-x-0 border-t-0 rounded-none h-24 flex items-center">
+        <div class="max-w-7xl mx-auto px-6 w-full flex items-center justify-between">
+            
+            <!-- Dokonalé Zväčšené Pohyblivé Logo -->
+            <div class="flex items-center space-x-4 cursor-pointer group">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-400 via-blue-500 to-indigo-600 flex items-center justify-center text-white relative overflow-hidden animate-majestic border border-cyan-300/50">
+                    <div class="absolute inset-0 bg-white/30 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
+                    <svg class="w-8 h-8 drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                </div>
+                <span class="text-2xl font-black tracking-widest text-white hidden sm:block">NOVA<span class="nova-gradient">DROP</span></span>
+            </div>
+            
+            <div class="flex items-center space-x-3 sm:space-x-5">
+                <!-- Limit Tracker -->
+                <div class="hidden md:flex items-center bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-xs shadow-inner">
+                    <span class="text-slate-400 font-bold mr-2" data-i18n="free_limit">Zadarmo:</span>
+                    <span id="limit-counter" class="text-cyan-400 font-black tracking-widest text-sm">20 / 20</span>
+                </div>
+
+                <!-- Jazyky (Vrátane Španielčiny) -->
+                <div class="flex bg-black/50 rounded-xl p-1 border border-white/10">
+                    <button onclick="setLanguage('sk')" class="lang-btn text-[10px] font-black px-3 py-2 rounded-lg hover:bg-white/10 transition text-cyan-400">SK</button>
+                    <button onclick="setLanguage('en')" class="lang-btn text-[10px] font-black px-3 py-2 rounded-lg hover:bg-white/10 transition text-slate-400">EN</button>
+                    <button onclick="setLanguage('de')" class="lang-btn text-[10px] font-black px-3 py-2 rounded-lg hover:bg-white/10 transition text-slate-400">DE</button>
+                    <button onclick="setLanguage('es')" class="lang-btn text-[10px] font-black px-3 py-2 rounded-lg hover:bg-white/10 transition text-slate-400">ES</button>
+                </div>
+                
+                <!-- Upsell -->
+                <button onclick="openProModal()" class="bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-black font-black text-[10px] sm:text-xs px-6 py-3 rounded-xl shadow-[0_0_20px_rgba(245,158,11,0.3)] transition uppercase tracking-widest" data-i18n="btn_pro">
+                    Pro
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HLAVNÁ APLIKÁCIA -->
+    <main class="relative z-10 pt-40 pb-24 max-w-5xl mx-auto px-4 sm:px-6">
+        
+        <!-- AdSense Banner -->
+        <div class="w-full max-w-[728px] mx-auto h-[90px] bg-black/30 border border-white/10 rounded-2xl mb-12 flex items-center justify-center relative overflow-hidden group shadow-inner">
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite]"></div>
+            <span class="text-[10px] text-slate-600 font-black tracking-widest uppercase opacity-60">Advertisement Space</span>
+        </div>
+
+        <div class="text-center mb-14">
+            <div class="inline-flex items-center space-x-2 glass-panel border-cyan-500/40 text-cyan-300 text-[10px] sm:text-xs font-black px-5 py-2.5 rounded-full mb-8 uppercase tracking-widest shadow-[0_0_30px_rgba(6,182,212,0.2)]">
+                <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_10px_#06b6d4]"></span>
+                <span data-i18n="badge_text">Lokálne spracovanie • Nulové riziko úniku dát</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black text-white mb-6 leading-[1.1] tracking-tight">
+                <span data-i18n="h1_part1">Nová éra optimalizácie.</span> <br>
+                <span class="nova-gradient" data-i18n="h1_part2">Bleskovo a bezpečne.</span>
+            </h1>
+            <p class="text-slate-400 text-base md:text-xl max-w-2xl mx-auto font-medium" data-i18n="subtitle">Zmenšite objem dát, odstráňte citlivé GPS súradnice a pridajte vodoznak v jedinom kroku. Všetko vo vašom prehliadači.</p>
+        </div>
+
+        <!-- HLAVNÝ NÁSTROJ -->
+        <div class="glass-panel p-6 md:p-10 rounded-[2.5rem] shadow-2xl">
+            
+            <!-- EXKLUZÍVNY OVLÁDACÍ PANEL -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+                <!-- Ľavá strana (Základ) -->
+                <div class="bg-black/40 p-6 rounded-3xl border border-white/10 flex flex-col justify-between space-y-6 shadow-inner">
+                    <div>
+                        <label class="block text-[11px] font-black text-slate-400 mb-3 uppercase tracking-widest" data-i18n="target_format">Výstupný formát</label>
+                        <select id="format-select" class="w-full bg-black/60 border border-white/10 rounded-2xl px-5 py-4 text-sm text-white font-bold focus:outline-none focus:border-cyan-500 cursor-pointer shadow-inner">
+                            <option value="webp">WebP (Až o 80% menšie, moderné)</option>
+                            <option value="jpeg">JPG (Maximálna kompatibilita)</option>
+                            <option value="png">PNG (Pre zachovanie priehľadnosti)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[11px] font-black text-slate-400 mb-3 uppercase tracking-widest">
+                            <span data-i18n="quality">Kvalita kompresie</span>
+                            <span id="quality-val" class="text-cyan-400 font-black text-sm">80%</span>
+                        </div>
+                        <input type="range" id="quality-slider" min="10" max="100" value="80" class="w-full">
+                    </div>
+                </div>
+
+                <!-- Pravá strana (Killer Features) -->
+                <div class="bg-black/40 p-6 rounded-3xl border border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.1)] inset flex flex-col justify-between space-y-5">
+                    <!-- EXIF Stripper (Privacy Shield) -->
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-base font-black text-white flex items-center"><span class="text-cyan-400 mr-2 text-xl">🛡️</span> Privacy Shield (EXIF)</p>
+                            <p class="text-[11px] text-slate-400 mt-1 font-medium" data-i18n="exif_desc">Vymaže GPS súradnice a dáta z fotoaparátu.</p>
+                        </div>
+                        <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                            <!-- Zmenené na vizuálne "Vždy zapnuté" pre bezpečnosť -->
+                            <input type="checkbox" checked disabled class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-not-allowed z-10 top-0 right-0 border-cyan-500"/>
+                            <label class="toggle-label block overflow-hidden h-6 rounded-full bg-cyan-500 cursor-not-allowed shadow-[0_0_15px_rgba(6,182,212,0.6)]"></label>
+                        </div>
+                    </div>
+                    
+                    <!-- Hromadný vodoznak -->
+                    <div class="pt-4 border-t border-white/10">
+                        <label class="block text-[11px] font-black text-cyan-400 mb-3 uppercase tracking-widest" data-i18n="watermark">Hromadný vodoznak (Text)</label>
+                        <input type="text" id="watermark-input" placeholder="Napr.: © Moja Značka" class="w-full bg-black/60 border border-white/10 rounded-2xl px-5 py-4 text-sm text-white font-bold focus:outline-none focus:border-cyan-500 placeholder-slate-600 transition shadow-inner">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drag & Drop -->
+            <div id="drop-zone" class="drop-zone bg-black/30 rounded-[2.5rem] p-16 text-center cursor-pointer flex flex-col items-center justify-center relative overflow-hidden group hover:bg-black/40 mt-4 shadow-inner">
+                <input type="file" id="file-input" multiple accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                <div class="w-24 h-24 rounded-[2rem] bg-gradient-to-tr from-cyan-500/20 to-blue-600/20 text-cyan-400 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 border border-cyan-500/30 shadow-[0_0_40px_rgba(6,182,212,0.3)]">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                </div>
+                <h3 class="text-3xl font-black text-white mb-3 tracking-tight" data-i18n="drop_title">Presuňte súbory do zóny</h3>
+                <p class="text-sm text-cyan-300/80 font-bold tracking-wide" data-i18n="drop_desc">Spracujte až 20 fotografií hromadne a okamžite (JPG, PNG, WebP)</p>
+            </div>
+
+            <!-- Výsledky -->
+            <div id="results-area" class="mt-10 hidden">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-5 bg-black/40 p-5 rounded-2xl border border-white/10 shadow-inner">
+                    <h4 class="text-sm font-black text-slate-300 uppercase tracking-widest mb-4 sm:mb-0" data-i18n="results_title">Spracované súbory</h4>
+                    <button onclick="downloadAll()" class="w-full sm:w-auto text-xs font-black bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-black px-6 py-3 rounded-xl transition-all border border-cyan-500/40 uppercase tracking-widest shadow-[0_0_20px_rgba(6,182,212,0.2)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)]" data-i18n="btn_dl_all">
+                        ⬇ Stiahnuť všetky naraz
+                    </button>
+                </div>
+                <div id="files-list" class="space-y-4 max-h-[500px] overflow-y-auto pr-4 custom-scroll"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        /* --- 1. KOMPLETNÁ LOKALIZÁCIA (SK, EN, DE, ES) --- */
+        const dict = {
+            sk: {
+                seo_title: "NovaDrop | Rýchla konverzia a ochrana fotiek", badge_text: "Lokálne spracovanie • Nulové riziko úniku dát",
+                h1_part1: "Nová éra optimalizácie.", h1_part2: "Bleskovo a bezpečne.",
+                subtitle: "Zmenšite objem dát, odstráňte citlivé GPS súradnice a pridajte vodoznak v jedinom kroku. Všetko vo vašom prehliadači.",
+                target_format: "Výstupný formát", quality: "Kvalita kompresie", watermark: "Hromadný vodoznak (Text)",
+                exif_desc: "Automaticky vymaže GPS a dáta z fotoaparátu pri konverzii.",
+                drop_title: "Presuňte súbory do zóny", drop_desc: "Spracujte až 20 fotografií hromadne (JPG, PNG, WebP)",
+                results_title: "Spracované súbory", btn_download: "Stiahnuť", btn_dl_all: "⬇ Stiahnuť všetky naraz", free_limit: "Zadarmo:"
+            },
+            en: {
+                seo_title: "NovaDrop | Blazing Fast Image Optimizer", badge_text: "Local processing • Zero data leak risk",
+                h1_part1: "The new era of optimization.", h1_part2: "Fast and secure.",
+                subtitle: "Reduce file size, strip sensitive GPS data, and add a watermark in one step. Completely in your browser.",
+                target_format: "Output Format", quality: "Compression Quality", watermark: "Bulk Watermark (Text)",
+                exif_desc: "Automatically strips GPS and camera metadata during conversion.",
+                drop_title: "Drop files into the zone", drop_desc: "Process up to 20 photos in bulk (JPG, PNG, WebP)",
+                results_title: "Processed Files", btn_download: "Download", btn_dl_all: "⬇ Download All", free_limit: "Free Limit:"
+            },
+            de: {
+                seo_title: "NovaDrop | Extrem schnelle Bildoptimierung", badge_text: "Lokale Verarbeitung • Kein Datenleck",
+                h1_part1: "Die neue Ära der Optimierung.", h1_part2: "Schnell und sicher.",
+                subtitle: "Reduzieren Sie die Größe, entfernen Sie sensible GPS-Daten und fügen Sie ein Wasserzeichen in einem Schritt hinzu.",
+                target_format: "Zielformat", quality: "Qualität", watermark: "Massen-Wasserzeichen (Text)",
+                exif_desc: "Entfernt bei der Konvertierung automatisch GPS- und Kameradaten.",
+                drop_title: "Dateien hier ablegen", drop_desc: "Bis zu 20 Fotos gleichzeitig verarbeiten (JPG, PNG, WebP)",
+                results_title: "Verarbeitete Dateien", btn_download: "Laden", btn_dl_all: "⬇ Alle herunterladen", free_limit: "Kostenlos:"
+            },
+            es: {
+                seo_title: "NovaDrop | Optimizador de imágenes ultrarrápido", badge_text: "Procesamiento local • Cero riesgo de fuga de datos",
+                h1_part1: "La nueva era de la optimización.", h1_part2: "Rápida y segura.",
+                subtitle: "Reduce el tamaño, elimina datos GPS sensibles y añade una marca de agua en un solo paso. Todo en tu navegador.",
+                target_format: "Formato de salida", quality: "Calidad", watermark: "Marca de agua (Texto)",
+                exif_desc: "Elimina automáticamente el GPS y los metadatos de la cámara.",
+                drop_title: "Suelta los archivos aquí", drop_desc: "Procesa hasta 20 fotos a la vez (JPG, PNG, WebP)",
+                results_title: "Archivos procesados", btn_download: "Descargar", btn_dl_all: "⬇ Descargar todos", free_limit: "Gratis:"
+            }
+        };
+
+        let currentLang = 'sk';
+        function setLanguage(lang) {
+            currentLang = lang; document.documentElement.lang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n'); if (dict[lang] && dict[lang][key]) el.innerHTML = dict[lang][key];
+            });
+            document.title = dict[lang]['seo_title'];
+            document.querySelectorAll('.lang-btn').forEach(b => {
+                b.classList.remove('text-cyan-400'); b.classList.add('text-slate-400');
+            });
+            event.target.classList.remove('text-slate-400');
+            event.target.classList.add('text-cyan-400');
+            
+            // Update existujúcich tlačidiel na stiahnutie v zozname
+            document.querySelectorAll('.download-link').forEach(btn => {
+                btn.innerHTML = dict[lang]['btn_download'];
+            });
+        }
+
+        /* --- 2. VYLEPŠENÁ AI (Nova AI Core) --- */
+        function processAI() {
+            const input = document.getElementById('ai-prompt-box').value.toLowerCase();
+            const originalInput = document.getElementById('ai-prompt-box').value;
+            const feedback = document.getElementById('ai-feedback');
+            if(!input) return;
+            
+            feedback.classList.remove('hidden'); feedback.innerText = '⚙️ Nova AI analyzuje...';
+
+            setTimeout(() => {
+                let match;
+                const wmRegex = /(?:vodoznak|watermark|marca de agua)\s*(?:je\s*)?['"]([^'"]+)['"]/i;
+                if ((match = originalInput.match(wmRegex))) {
+                    document.getElementById('watermark-input').value = match[1];
+                    feedback.innerText = `✨ Vodoznak úspešne nastavený na: "${match[1]}"`;
+                }
+                else if (input.match(/webp|jpg|jpeg|png/i)) {
+                    let f = input.match(/webp|jpg|jpeg|png/i)[0]; if(f === 'jpg') f = 'jpeg';
+                    document.getElementById('format-select').value = f; feedback.innerText = `✨ Výstup nastavený na formát ${f.toUpperCase()}.`;
+                } 
+                else if ((match = input.match(/kvalit.*?(\d+)/i)) || (match = input.match(/quality.*?(\d+)/i)) || (match = input.match(/calidad.*?(\d+)/i))) {
+                    let val = Math.min(100, Math.max(10, parseInt(match[1])));
+                    document.getElementById('quality-slider').value = val; document.getElementById('quality-val').innerText = val + '%';
+                    feedback.innerText = `✨ Kvalita kompresie nastavená na ${val}%.`;
+                }
+                else if (input.match(/zmaž|vymaž|clear|clean|limpiar/i)) {
+                    document.getElementById('files-list').innerHTML = ''; document.getElementById('results-area').classList.add('hidden');
+                    feedback.innerText = '✨ Pracovná plocha bola vyčistená.';
+                }
+                else if(input.match(/angl|english|en/i)) { setLanguage('en'); feedback.innerText = '✨ Language: EN.'; }
+                else if(input.match(/nem|german|deutsch|de/i)) { setLanguage('de'); feedback.innerText = '✨ Sprache: DE.'; }
+                else if(input.match(/špan|spanish|espa|es/i)) { setLanguage('es'); feedback.innerText = '✨ Idioma: ES.'; }
+                else if(input.match(/sloven|slovak|sk/i)) { setLanguage('sk'); feedback.innerText = '✨ Jazyk: SK.'; }
+                else if(input.match(/pro|predplat|premium/i)) { openProModal(); feedback.innerText = '✨ Zobrazujem výhody PRO verzie.'; }
+                else { feedback.innerText = '✨ Tip: Skús "Pridaj vodoznak \'Fotograf\'", "Kvalita 75" alebo "Prepni do ES".'; }
+                
+                document.getElementById('ai-prompt-box').value = '';
+            }, 500);
+        }
+
+        /* --- 3. BIZNIS: PRO MODAL A LIMITY --- */
+        let freeUsed = 0; const FREE_LIMIT = 20;
+        function openProModal() { document.getElementById('pro-modal').classList.add('modal-active'); }
+        function closeProModal() { document.getElementById('pro-modal').classList.remove('modal-active'); }
+        function updateCounter() {
+            const left = FREE_LIMIT - freeUsed;
+            document.getElementById('limit-counter').innerText = `${left} / ${FREE_LIMIT}`;
+            if(left <= 0) {
+                document.getElementById('limit-counter').className = 'text-red-400 font-black tracking-widest text-sm animate-pulse drop-shadow-[0_0_5px_rgba(239,68,68,0.8)]';
+            }
+        }
+
+        /* --- 4. EXTRÉMNY ENGINE V3.5 (Kompresia + EXIF Stripper + Watermark) --- */
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const filesList = document.getElementById('files-list');
+
+        document.getElementById('quality-slider').addEventListener('input', (e) => { document.getElementById('quality-val').innerText = e.target.value + '%'; });
+
+        ['dragenter', 'dragover'].forEach(e => dropZone.addEventListener(e, prevDef, false));
+        ['dragleave', 'drop'].forEach(e => dropZone.addEventListener(e, prevDef, false));
+        dropZone.addEventListener('dragover', () => dropZone.classList.add('active'));
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('active'));
+        dropZone.addEventListener('drop', (e) => { dropZone.classList.remove('active'); handleFiles(e.dataTransfer.files); });
+        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+        function prevDef(e) { e.preventDefault(); e.stopPropagation(); }
+        function formatBytes(b) { if(b===0)return '0 B'; const k=1024, s=['B','KB','MB'], i=Math.floor(Math.log(b)/Math.log(k)); return parseFloat((b/Math.pow(k,i)).toFixed(2))+' '+s[i]; }
+
+        function downloadAll() {
+            const links = document.querySelectorAll('.download-link');
+            if(links.length === 0) return;
+            links.forEach((link, idx) => { setTimeout(() => link.click(), idx * 250); }); 
+        }
+
+        function handleFiles(files) {
+            if(files.length === 0) return;
+            
+            let filesToProcess = Array.from(files);
+            
+            // Biznis Hook na limity
+            if(freeUsed + filesToProcess.length > FREE_LIMIT) {
+                const available = FREE_LIMIT - freeUsed;
+                if(available <= 0) { openProModal(); return; }
+                filesToProcess = filesToProcess.slice(0, available);
+                setTimeout(openProModal, 1500); 
+            }
+
+            document.getElementById('results-area').classList.remove('hidden');
+            const watermarkText = document.getElementById('watermark-input').value;
+            
+            filesToProcess.forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+                freeUsed++; updateCounter();
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.width; canvas.height = img.height;
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Kreslenie (Maže EXIF)
+                        ctx.drawImage(img, 0, 0);
+
+                        // Vodoznak
+                        if(watermarkText.trim() !== '') {
+                            const fontSize = Math.max(16, Math.floor(img.width * 0.04)); 
+                            ctx.font = `900 ${fontSize}px sans-serif`;
+                            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)'; 
+                            ctx.textAlign = 'right';
+                            ctx.textBaseline = 'bottom';
+                            ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
+                            ctx.shadowBlur = 12;
+                            ctx.fillText(watermarkText, img.width - (fontSize), img.height - (fontSize));
+                        }
+
+                        const format = document.getElementById('format-select').value;
+                        const quality = document.getElementById('quality-slider').value / 100;
+                        
+                        canvas.toBlob((blob) => {
+                            if(!blob) return;
+                            const url = URL.createObjectURL(blob);
+                            const newFilename = file.name.split('.')[0] + (watermarkText ? '_wm.' : '_nova.') + format;
+                            const saving = Math.round((1 - (blob.size / file.size)) * 100);
+                            
+                            const item = document.createElement('div');
+                            item.className = "bg-black/40 border border-white/10 rounded-2xl p-5 flex items-center justify-between hover:bg-black/60 transition-all duration-300 shadow-lg";
+                            item.innerHTML = `
+                                <div class="flex items-center space-x-5">
+                                    <div class="relative group-img">
+                                        <img src="${url}" class="w-16 h-16 object-cover rounded-xl border border-white/20 shadow-lg">
+                                        ${watermarkText ? '<span class="absolute -bottom-2 -right-2 bg-cyan-500 text-black text-[9px] font-black px-2 py-0.5 rounded-md shadow-lg">WM</span>' : ''}
+                                    </div>
+                                    <div>
+                                        <p class="text-base font-black text-white truncate max-w-[120px] sm:max-w-[350px] tracking-wide">${newFilename}</p>
+                                        <div class="text-xs text-slate-400 mt-1.5 font-bold flex items-center">
+                                            <span class="line-through opacity-50">${formatBytes(file.size)}</span> <span class="mx-2 text-slate-600">➔</span> <span class="text-cyan-400 font-black text-sm">${formatBytes(blob.size)}</span> 
+                                            <span class="ml-3 bg-cyan-500/10 text-cyan-400 px-2 py-0.5 rounded-lg border border-cyan-500/30 font-black tracking-wider">-${saving > 0 ? saving : 0}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="${url}" download="${newFilename}" class="download-link bg-white/10 hover:bg-cyan-500 text-cyan-300 hover:text-black font-black px-6 py-3 rounded-xl transition-all text-xs border border-white/10 hover:border-transparent flex-shrink-0 uppercase tracking-widest shadow-lg hover:shadow-[0_0_20px_rgba(6,182,212,0.6)]" data-i18n="btn_download">${dict[currentLang]['btn_download']}</a>
+                            `;
+                            filesList.prepend(item);
+                        }, `image/${format}`, quality);
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    </script>
+</body>
+</html>
