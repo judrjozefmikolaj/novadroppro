@@ -738,90 +738,116 @@
                     reader.onload = (e) => {
                         const img = new Image();
                         img.onload = () => {
-                            const canvas = document.createElement('canvas');
-                            canvas.width = img.width; canvas.height = img.height;
-                            const ctx = canvas.getContext('2d');
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.width; canvas.height = img.height;
+                        const ctx = canvas.getContext('2d');
+                        
+                        // 1. Ak je formát JPEG, musíme vytvoriť fixné biele pozadie (nemá priehľadnosť)
+                        if (format === 'jpeg') {
+                            ctx.fillStyle = '#ffffff';
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        } else {
+                             // Pre PNG/WebP chceme vymazať všetko, aby sme mali čistú priehľadnosť
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        }
+                        
+                        // 2. Kreslenie hlavnej fotografie (s voliteľným zaoblením)
+                        ctx.save(); // Uložíme čistý stav
+                        
+                        if (applyRounded) {
+                            // Výpočet rádiusu – nesmie byť väčší ako polovica kratšej strany
+                            const radius = Math.min(Math.min(img.width, img.height) / 2, Math.max(20, Math.min(img.width, img.height) * 0.05));
+                            window.createRoundRectPath(ctx, 0, 0, img.width, img.height, radius);
+                            ctx.clip(); // Orežeme plátno na oblúk. Všetko nakreslené po tomto riadku bude len vo vnútri tohto oblúka.
+                        }
+
+                        if (applyMagic) { ctx.filter = 'saturate(1.25) contrast(1.15) brightness(1.05)'; }
+                        
+                        // Vykreslenie samotnej fotky
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        ctx.filter = 'none'; // Vypneme magic pre vodoznak
+                        ctx.restore(); // Zrušíme clip() pre hlavnú fotku, aby sme mohli kresliť logo všade
+
+                        // 3. VODOZNAK: Základné nastavenia
+                        ctx.globalAlpha = wmOpacity;
+                        const pad = Math.max(10, img.width * 0.02);
+
+                        // --- Kreslenie TEXTOVÉHO vodoznaku ---
+                        if (wmType === 'text' && wmText.trim() !== '') {
+                            const fontSize = Math.max(12, Math.floor(img.width * (wmSizePerc / 100))); 
+                            ctx.font = `900 ${fontSize}px sans-serif`; 
+                            ctx.fillStyle = 'white'; 
+                            ctx.shadowColor = 'rgba(0, 0, 0, 0.9)'; 
+                            ctx.shadowBlur = Math.max(4, fontSize / 4);
+                            ctx.textBaseline = (wmPos === 'tr' || wmPos === 'tl') ? 'top' : (wmPos === 'c' ? 'middle' : 'bottom');
+                            ctx.textAlign = (wmPos === 'tl' || wmPos === 'bl') ? 'left' : (wmPos === 'c' ? 'center' : 'right');
                             
-                            // Ak je to JPEG, dáme biele pozadie kvôli absencii priehľadnosti
-                            if (format === 'jpeg') {
-                                ctx.fillStyle = '#ffffff';
-                                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                            let x, y;
+                            if (wmPos === 'br') { x = img.width - pad; y = img.height - pad; }
+                            else if (wmPos === 'bl') { x = pad; y = img.height - pad; }
+                            else if (wmPos === 'tr') { x = img.width - pad; y = pad; }
+                            else if (wmPos === 'tl') { x = pad; y = pad; }
+                            else if (wmPos === 'c') { x = img.width / 2; y = img.height / 2; }
+                            
+                            ctx.fillText(wmText, x, y);
+                        } 
+                        // --- Kreslenie LOGA (Tvoj detailne požiadovaný fix!) ---
+                        else if (wmType === 'logo' && window.customWatermarkImg && window.customWatermarkImg.complete && window.customWatermarkImg.naturalWidth > 0) {
+                            const w = img.width * (wmSizePerc / 100);
+                            const h = window.customWatermarkImg.naturalHeight * (w / window.customWatermarkImg.naturalWidth);
+                            
+                            // Výpočet pozície X a Y
+                            let x, y;
+                            if (wmPos === 'br') { x = img.width - w - pad; y = img.height - h - pad; }
+                            else if (wmPos === 'bl') { x = pad; y = img.height - h - pad; }
+                            else if (wmPos === 'tr') { x = img.width - w - pad; y = pad; }
+                            else if (wmPos === 'tl') { x = pad; y = pad; }
+                            else if (wmPos === 'c') { x = (img.width - w)/2; y = (img.height - h)/2; }
+                            
+                            ctx.save(); // Začíname novú samostatnú vrstvu pre logo
+                            
+                            // Ak má byť logo zaoblené, musíme použiť špeciálny trik pre Canvas:
+                            if (applyLogoRounded) {
+                                const logoRadius = Math.min(w, h) * 0.15; 
+                                
+                                // TRIK S TIEŇOM: Vytvoríme najprv "falošný" tieň nakreslením obdĺžnika, zatiaľ neorezaného clip()
+                                ctx.shadowColor = 'rgba(0, 0, 0, 0.6)'; 
+                                ctx.shadowBlur = 15;
+                                ctx.shadowOffsetX = 0;
+                                ctx.shadowOffsetY = 0;
+                                ctx.fillStyle = 'rgba(0,0,0,1)';
+                                
+                                window.createRoundRectPath(ctx, x, y, w, h, logoRadius);
+                                ctx.fill(); // Vykreslíme tento oblý čierny tvar len preto, aby vrhol krásny tieň
+                                
+                                // Vypneme tieň pre ďalšie kreslenie a nasadíme "Clipping masku" na obraz!
+                                ctx.shadowColor = 'transparent';
+                                ctx.shadowBlur = 0;
+                                ctx.clip(); // Teraz všetko po tomto (logo) bude orezané
+                                
+                            } else {
+                                // OSTRÉ HRANY LOGA: Jednoduchý tieň bez `clip()`, logo ostane obdĺžnikové
+                                ctx.shadowColor = 'rgba(0, 0, 0, 0.6)'; 
+                                ctx.shadowBlur = 15;
+                                ctx.shadowOffsetX = 0;
+                                ctx.shadowOffsetY = 0;
                             }
                             
-                            ctx.save();
+                            // Vykreslíme samotné logo
+                            ctx.drawImage(window.customWatermarkImg, x, y, w, h);
                             
-                            // ZAOBLENIE OBRAZU - Ak to používateľ vyžaduje
-                            if (applyRounded) {
-                                const radius = Math.min(Math.min(img.width, img.height) / 2, Math.max(20, Math.min(img.width, img.height) * 0.05));
-                                window.createRoundRectPath(ctx, 0, 0, img.width, img.height, radius);
-                                ctx.clip(); 
-                            }
+                            ctx.restore(); // Ukončíme úpravy loga
+                        }
+                        
+                        // Zresetujeme všetky efekty
+                        ctx.globalAlpha = 1.0; 
+                        ctx.shadowBlur = 0;
+                        ctx.shadowColor = 'transparent';
 
-                            if (applyMagic) { ctx.filter = 'saturate(1.25) contrast(1.15) brightness(1.05)'; }
-                            
-                            // VYKRESLENIE
-                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                            ctx.filter = 'none';
-
-                            ctx.globalAlpha = wmOpacity;
-                            const pad = Math.max(10, img.width * 0.02);
-
-                            // VODOZNAK: TEXT
-                            if (wmType === 'text' && wmText.trim() !== '') {
-                                const fontSize = Math.max(12, Math.floor(img.width * (wmSizePerc / 100))); 
-                                ctx.font = `900 ${fontSize}px sans-serif`; ctx.fillStyle = 'white'; 
-                                ctx.shadowColor = 'rgba(0, 0, 0, 0.9)'; ctx.shadowBlur = Math.max(4, fontSize / 4);
-                                ctx.textBaseline = (wmPos === 'tr' || wmPos === 'tl') ? 'top' : (wmPos === 'c' ? 'middle' : 'bottom');
-                                ctx.textAlign = (wmPos === 'tl' || wmPos === 'bl') ? 'left' : (wmPos === 'c' ? 'center' : 'right');
-                                
-                                let x, y;
-                                if (wmPos === 'br') { x = img.width - pad; y = img.height - pad; }
-                                else if (wmPos === 'bl') { x = pad; y = img.height - pad; }
-                                else if (wmPos === 'tr') { x = img.width - pad; y = pad; }
-                                else if (wmPos === 'tl') { x = pad; y = pad; }
-                                else if (wmPos === 'c') { x = img.width / 2; y = img.height / 2; }
-                                
-                                ctx.fillText(wmText, x, y);
-                            } 
-                            // VODOZNAK: LOGO
-                            else if (wmType === 'logo' && window.customWatermarkImg && window.customWatermarkImg.complete && window.customWatermarkImg.naturalWidth > 0) {
-                                const w = img.width * (wmSizePerc / 100);
-                                const h = window.customWatermarkImg.naturalHeight * (w / window.customWatermarkImg.naturalWidth);
-                                let x, y;
-                                if (wmPos === 'br') { x = img.width - w - pad; y = img.height - h - pad; }
-                                else if (wmPos === 'bl') { x = pad; y = img.height - h - pad; }
-                                else if (wmPos === 'tr') { x = img.width - w - pad; y = pad; }
-                                else if (wmPos === 'tl') { x = pad; y = pad; }
-                                else if (wmPos === 'c') { x = (img.width - w)/2; y = (img.height - h)/2; }
-                                
-                                ctx.save(); 
-                                if (applyLogoRounded) {
-                                    // Matematicky presné a nerozbité vykreslenie oblého loga s tieňom
-                                    const logoRadius = Math.min(w, h) * 0.15; 
-                                    
-                                    // 1. Nakreslíme neviditeľný tvar iba kvôli dokonalému tieňu
-                                    ctx.shadowColor = 'rgba(0, 0, 0, 0.6)'; ctx.shadowBlur = 15;
-                                    ctx.fillStyle = 'rgba(0,0,0,1)';
-                                    window.createRoundRectPath(ctx, x, y, w, h, logoRadius);
-                                    ctx.fill();
-                                    
-                                    // 2. Vypneme tieň a orežeme pracovnú plochu na zaoblenú
-                                    ctx.shadowColor = 'transparent';
-                                    ctx.clip();
-                                } else {
-                                    ctx.shadowColor = 'rgba(0, 0, 0, 0.6)'; ctx.shadowBlur = 15;
-                                }
-                                // Vykreslíme samotné logo
-                                ctx.drawImage(window.customWatermarkImg, x, y, w, h);
-                                ctx.restore(); 
-                            }
-                            
-                            ctx.restore(); 
-                            ctx.globalAlpha = 1.0; ctx.shadowBlur = 0;
-
-                            const quality = document.getElementById('quality-slider').value / 100;
-                            
-                            canvas.toBlob((blob) => {
+                        const quality = document.getElementById('quality-slider').value / 100;
+                        
+                        // ... Zvyšok zostáva nezmenený (ukladanie blob, vypisovanie DOM...)
+                        canvas.toBlob((blob) => {
                                 if(!blob) return;
                                 const url = URL.createObjectURL(blob);
                                 
