@@ -3,16 +3,6 @@
 <head>
     <!-- GOOGLE ADSENSE KÓD -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8132232743513894" crossorigin="anonymous"></script>
-
-   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-F737TD4CDX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-F737TD4CDX');
-</script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -103,21 +93,6 @@
 
     <div id="glow-1" class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-cyan-600/15 rounded-full blur-[130px] pointer-events-none transition-colors duration-1000 z-0"></div>
     <div id="glow-2" class="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-violet-600/15 rounded-full blur-[130px] pointer-events-none transition-colors duration-1000 z-0"></div>
-
-    <!-- AI ASISTENT -->
-    <div class="fixed bottom-6 right-6 z-50 glass-panel p-5 rounded-3xl w-80 sm:w-96 shadow-[0_20px_50px_rgba(0,0,0,0.6)] border-cyan-500/30 transition-transform duration-300 hover:scale-[1.02]">
-        <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
-            <div class="flex items-center space-x-2">
-                <div class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_12px_#06b6d4]"></div>
-                <span class="text-[11px] font-black uppercase tracking-widest text-cyan-400">Nova AI Core</span>
-            </div>
-        </div>
-        <textarea id="ai-prompt-box" rows="2" placeholder="Napr.: Zaobli rohy, zapni logo, zmeň kvalitu na 90..." class="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-400 transition resize-none custom-scroll placeholder-slate-500 shadow-inner"></textarea>
-        <button onclick="processAI()" class="mt-3 w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-black text-xs py-3.5 px-4 rounded-xl shadow-lg shadow-cyan-500/20 transition-all">
-            ✨ Aktivovať AI Príkaz
-        </button>
-        <div id="ai-feedback" class="mt-3 text-[11px] text-cyan-300 font-bold hidden bg-cyan-500/10 p-2.5 rounded-lg border border-cyan-500/20"></div>
-    </div>
 
     <!-- DONATE MODAL -->
     <div id="donate-modal" class="fixed inset-0 z-[80] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
@@ -249,6 +224,24 @@
                 <span class="nova-gradient" data-i18n="h1_part2">Bleskovo a bezpečne.</span>
             </h1>
             <p class="text-slate-400 text-base md:text-xl max-w-3xl mx-auto font-medium" data-i18n="subtitle">Kompresia, zaoblené rohy, odstránenie dát, Magic vylepšenie a vlastné LOGO. Všetko naraz vo vašom prehliadači.</p>
+        </div>
+
+        <!-- AI ASISTENT HORIZONTAL COMMAND BAR -->
+        <div class="glass-panel p-4 md:p-5 rounded-[2rem] w-full mb-8 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border-cyan-500/30 relative overflow-hidden group transition-all">
+            <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-blue-600/5 group-hover:from-cyan-500/10 group-hover:to-blue-600/10 transition-colors duration-500"></div>
+            <div class="relative z-10 flex flex-col md:flex-row items-stretch md:items-center space-y-3 md:space-y-0 md:space-x-4">
+                <div class="flex items-center space-x-3 shrink-0 px-2 md:px-4">
+                    <div class="w-3 h-3 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_12px_#06b6d4]"></div>
+                    <span class="text-xs font-black uppercase tracking-widest text-cyan-400" data-i18n="ai_title">Nova AI Core</span>
+                </div>
+                <div class="flex-grow">
+                    <input type="text" id="ai-prompt-box" class="w-full bg-black/60 border border-white/10 hover:border-cyan-500/50 rounded-xl px-4 py-3.5 text-sm text-white font-bold focus:outline-none focus:border-cyan-400 transition placeholder-slate-500 shadow-inner" data-i18n-placeholder="ai_placeholder" placeholder="Napr.: Zaobli rohy, zapni logo, zmeň kvalitu na 90...">
+                </div>
+                <button onclick="processAI()" class="shrink-0 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-black text-xs py-3.5 px-8 rounded-xl shadow-lg shadow-cyan-500/20 transition-all uppercase tracking-widest hover:scale-[1.02]" data-i18n="ai_btn">
+                    ✨ Aktivovať AI
+                </button>
+            </div>
+            <div id="ai-feedback" class="mt-3 mx-2 text-[11px] text-cyan-300 font-bold hidden bg-cyan-500/10 p-2.5 rounded-lg border border-cyan-500/20"></div>
         </div>
 
         <!-- OVLÁDACÍ PANEL -->
@@ -422,7 +415,8 @@
                     exif_desc: "Maže GPS a dáta z fotoaparátu.", magic_desc: "Oživí farby a presvetlí tiene.",
                     drop_title: "Presuňte súbory do zóny", drop_desc: "Spracujte až 300 fotografií hromadne (Odporúčame WebP/PNG)",
                     results_title: "Spracované súbory", click_preview: "👉 Kliknite na fotku pre kino náhľad", btn_download: "Stiahnuť", btn_download_single: "⬇ Stiahnuť túto fotku", btn_dl_all: "⬇ Stiahnuť všetky", free_limit: "Zadarmo:", btn_pro: "Pro",
-                    donate_title: "Podporte projekt", donate_text1: "Ak vám nástroj ušetril čas, môžete náš vývoj podporiť ľubovoľným darom.", donate_text2: "50% z každého daru venujeme na charitu.", donate_btn: "Darovať a pomôcť", donate_custom: "Zadajte vlastnú sumu (€)"
+                    donate_title: "Podporte projekt", donate_text1: "Ak vám nástroj ušetril čas, môžete náš vývoj podporiť ľubovoľným darom.", donate_text2: "50% z každého daru venujeme na charitu.", donate_btn: "Darovať a pomôcť", donate_custom: "Zadajte vlastnú sumu (€)",
+                    ai_title: "Nova AI Core", ai_placeholder: "Napr.: Zaobli rohy, zapni logo, zmeň kvalitu na 90...", ai_btn: "✨ Aktivovať AI"
                 },
                 en: {
                     seo_title: "NovaDrop | Blazing Fast Image Optimizer", badge_text: "Local processing • Zero data leak risk",
@@ -436,7 +430,8 @@
                     exif_desc: "Strips GPS and camera metadata.", magic_desc: "Boosts colors and brightens shadows.",
                     drop_title: "Drop files into the zone", drop_desc: "Process up to 300 photos in bulk (Use WebP/PNG)",
                     results_title: "Processed Files", click_preview: "👉 Click image for cinematic preview", btn_download: "Download", btn_download_single: "⬇ Download this photo", btn_dl_all: "⬇ Download All", free_limit: "Free:", btn_pro: "Pro",
-                    donate_title: "Support the project", donate_text1: "If this tool saved your time, consider supporting our development.", donate_text2: "We donate 50% to charity.", donate_btn: "Donate & Help", donate_custom: "Enter a custom amount (€)"
+                    donate_title: "Support the project", donate_text1: "If this tool saved your time, consider supporting our development.", donate_text2: "We donate 50% to charity.", donate_btn: "Donate & Help", donate_custom: "Enter a custom amount (€)",
+                    ai_title: "Nova AI Core", ai_placeholder: "E.g.: Round corners, enable logo, quality to 90...", ai_btn: "✨ Activate AI"
                 },
                 de: {
                     seo_title: "NovaDrop | Extrem schnelle Bildoptimierung", badge_text: "Lokale Verarbeitung • Kein Datenleck",
@@ -450,7 +445,8 @@
                     exif_desc: "Löscht GPS- und Kameradaten.", magic_desc: "Belebt Farben und hellt Schatten auf.",
                     drop_title: "Dateien hier ablegen", drop_desc: "Bis zu 300 Fotos gleichzeitig verarbeiten",
                     results_title: "Verarbeitete Dateien", click_preview: "👉 Klicken Sie für Kino-Vorschau", btn_download: "Laden", btn_download_single: "⬇ Foto laden", btn_dl_all: "⬇ Alle herunterladen", free_limit: "Frei:", btn_pro: "Pro",
-                    donate_title: "Projekt unterstützen", donate_text1: "Wenn Ihnen dieses Tool Zeit gespart hat, unterstützen Sie unsere Entwicklung.", donate_text2: "50% gehen an wohltätige Zwecke.", donate_btn: "Spenden & Helfen", donate_custom: "Eigener Betrag (€)"
+                    donate_title: "Projekt unterstützen", donate_text1: "Wenn Ihnen dieses Tool Zeit gespart hat, unterstützen Sie unsere Entwicklung.", donate_text2: "50% gehen an wohltätige Zwecke.", donate_btn: "Spenden & Helfen", donate_custom: "Eigener Betrag (€)",
+                    ai_title: "Nova AI Core", ai_placeholder: "Z.B.: Ecken abrunden, Logo an, Qualität 90...", ai_btn: "✨ AI Aktivieren"
                 },
                 es: {
                     seo_title: "NovaDrop | Optimizador de imágenes ultrarrápido", badge_text: "Procesamiento local • Cero riesgo de fuga",
@@ -464,8 +460,16 @@
                     exif_desc: "Elimina los metadatos y GPS.", magic_desc: "Revive los colores y mejora las sombras.",
                     drop_title: "Suelta los archivos aquí", drop_desc: "Procesa hasta 300 photos a la vez",
                     results_title: "Archivos procesados", click_preview: "👉 Haz clic para vista previa", btn_download: "Descargar", btn_download_single: "⬇ Descargar foto", btn_dl_all: "⬇ Descargar todos", free_limit: "Gratis:", btn_pro: "Pro",
-                    donate_title: "Apoya el proyecto", donate_text1: "Si esta herramienta te ahorró tiempo, considera apoyar nuestro desarrollo.", donate_text2: "Donamos el 50% a la caridad.", donate_btn: "Donar y Ayudar", donate_custom: "Monto personalizado (€)"
+                    donate_title: "Apoya el proyecto", donate_text1: "Si esta herramienta te ahorró tiempo, considera apoyar nuestro desarrollo.", donate_text2: "Donamos el 50% a la caridad.", donate_btn: "Donar y Ayudar", donate_custom: "Monto personalizado (€)",
+                    ai_title: "Nova AI Core", ai_placeholder: "Ej: Redondear esquinas, activar logo, calidad 90...", ai_btn: "✨ Activar AI"
                 }
+            };
+
+            const aiFeedbackTexts = {
+                sk: { proc: '⚙️ Nova AI spracováva...', done: '✨ Príkaz vykonaný.', tip: '✨ Tip: "Zapni zaoblené rohy", "Zapni logo" alebo "Kvalita 70".' },
+                en: { proc: '⚙️ Nova AI processing...', done: '✨ Command executed.', tip: '✨ Tip: "Round corners", "Enable logo" or "Quality 70".' },
+                de: { proc: '⚙️ Nova AI verarbeitet...', done: '✨ Befehl ausgeführt.', tip: '✨ Tipp: "Ecken abrunden", "Logo aktivieren" oder "Qualität 70".' },
+                es: { proc: '⚙️ Nova AI procesando...', done: '✨ Comando ejecutado.', tip: '✨ Tip: "Redondear esquinas", "Activar logo" o "Calidad 70".' }
             };
 
             window.currentLang = 'sk';
@@ -621,27 +625,35 @@
                 const feedback = document.getElementById('ai-feedback');
                 if(!input) return;
                 
-                feedback.classList.remove('hidden'); feedback.innerText = '⚙️ Nova AI spracováva...';
+                feedback.classList.remove('hidden'); 
+                feedback.innerText = aiFeedbackTexts[window.currentLang].proc;
+                
                 setTimeout(() => {
                     let match;
                     const wmRegex = /(?:vodoznak|watermark|marca de agua)\s*(?:je\s*)?['"]([^'"]+)['"]/i;
+                    let success = false;
                     
-                    if (input.match(/zaob|round|curv|roh/i)) { document.getElementById('rounded-toggle').checked = !document.getElementById('rounded-toggle').checked; feedback.innerText = '✨ Prepínam zaoblené rohy pre fotku.'; }
-                    else if (input.match(/vypni privacy|vypni exif/i)) { document.getElementById('exif-toggle').checked = false; feedback.innerText = '✨ Privacy Shield vypnutý.'; }
-                    else if (input.match(/zapni privacy|zapni exif/i)) { document.getElementById('exif-toggle').checked = true; feedback.innerText = '✨ Privacy Shield zapnutý.'; }
-                    else if ((match = originalInput.match(wmRegex))) { window.switchWmTab('text'); document.getElementById('watermark-text').value = match[1]; feedback.innerText = `✨ Textový vodoznak: "${match[1]}"`; }
-                    else if (input.match(/zapni logo|logo tab/i)) { window.switchWmTab('logo'); feedback.innerText = '✨ Prepnuté na LOGO.'; }
-                    else if (input.match(/webp|jpg|jpeg|png/i)) { let f = input.match(/webp|jpg|jpeg|png/i)[0]; if(f === 'jpg') f = 'jpeg'; document.getElementById('format-select').value = f; feedback.innerText = `✨ Formát zmenený na ${f.toUpperCase()}.`; } 
-                    else if ((match = input.match(/kvalit.*?(\d+)/i)) || (match = input.match(/quality.*?(\d+)/i))) { let val = Math.min(100, Math.max(10, parseInt(match[1]))); document.getElementById('quality-slider').value = val; document.getElementById('quality-val').innerText = val + '%'; feedback.innerText = `✨ Kvalita nastavená na ${val}%.`; }
-                    else if (input.match(/magic|enhance|vylep/i)) { document.getElementById('magic-toggle').checked = true; feedback.innerText = '✨ Magic Enhance aktivovaný!'; }
+                    if (input.match(/zaob|round|curv|roh/i)) { document.getElementById('rounded-toggle').checked = !document.getElementById('rounded-toggle').checked; success = true; }
+                    else if (input.match(/vypni privacy|vypni exif/i)) { document.getElementById('exif-toggle').checked = false; success = true; }
+                    else if (input.match(/zapni privacy|zapni exif/i)) { document.getElementById('exif-toggle').checked = true; success = true; }
+                    else if ((match = originalInput.match(wmRegex))) { window.switchWmTab('text'); document.getElementById('watermark-text').value = match[1]; success = true; }
+                    else if (input.match(/zapni logo|logo tab/i)) { window.switchWmTab('logo'); success = true; }
+                    else if (input.match(/webp|jpg|jpeg|png/i)) { let f = input.match(/webp|jpg|jpeg|png/i)[0]; if(f === 'jpg') f = 'jpeg'; document.getElementById('format-select').value = f; success = true; } 
+                    else if ((match = input.match(/kvalit.*?(\d+)/i)) || (match = input.match(/quality.*?(\d+)/i))) { let val = Math.min(100, Math.max(10, parseInt(match[1]))); document.getElementById('quality-slider').value = val; document.getElementById('quality-val').innerText = val + '%'; success = true; }
+                    else if (input.match(/magic|enhance|vylep/i)) { document.getElementById('magic-toggle').checked = true; success = true; }
                     else if (input.match(/zmaž|vymaž|clear|clean/i)) { 
                         document.getElementById('files-list').innerHTML = ''; document.getElementById('results-area').classList.add('hidden'); 
-                        window.previewItems = []; window.fileIndexCounter = 1; feedback.innerText = '✨ Plocha vyčistená.'; 
+                        window.previewItems = []; window.fileIndexCounter = 1; success = true; 
                     }
-                    else if(input.match(/angl|english|en/i)) { window.setLanguage('en', document.querySelectorAll('.lang-btn')[1]); feedback.innerText = '✨ Jazyk: EN.'; }
-                    else if(input.match(/špan|spanish|es/i)) { window.setLanguage('es', document.querySelectorAll('.lang-btn')[3]); feedback.innerText = '✨ Jazyk: ES.'; }
-                    else if(input.match(/pro|predplat|premium/i)) { window.openProModal(); feedback.innerText = '✨ Zobrazujem PRO verziu.'; }
-                    else { feedback.innerText = '✨ Tip: "Zapni zaoblené rohy", "Zapni logo" alebo "Kvalita 70".'; }
+                    else if(input.match(/angl|english|en/i)) { window.setLanguage('en', document.querySelectorAll('.lang-btn')[1]); success = true; }
+                    else if(input.match(/špan|spanish|es/i)) { window.setLanguage('es', document.querySelectorAll('.lang-btn')[3]); success = true; }
+                    else if(input.match(/pro|predplat|premium/i)) { window.openProModal(); success = true; }
+                    
+                    if (success) {
+                        feedback.innerText = aiFeedbackTexts[window.currentLang].done;
+                    } else {
+                        feedback.innerText = aiFeedbackTexts[window.currentLang].tip;
+                    }
                     inputBox.value = '';
                 }, 400);
             };
@@ -661,7 +673,6 @@
                     document.getElementById('limit-counter').className = 'text-red-400 font-black tracking-widest text-sm animate-pulse drop-shadow-[0_0_5px_rgba(239,68,68,0.8)]';
                 }
             };
-            // Okamžite aktualizuje zobrazenie po načítaní stránky
             window.updateCounter();
 
             const dropZone = document.getElementById('drop-zone');
